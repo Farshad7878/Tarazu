@@ -1,13 +1,13 @@
 <template>
     <div class="reception-dashboard">
         <div class="dashboard-header">
-            <h2>🏠 صفحه اصلی ریسپشن</h2>
+            <h2>صفحه اصلی ریسپشن</h2>
             <p>سیستم مدیریت فروش و مشتریان</p>
         </div>
 
         <div class="quick-actions-grid">
             <router-link to="/reception/new-order" class="quick-action primary">
-                <div class="action-icon">➕</div>
+                <div class="action-icon"><Plus :size="22" :stroke-width="1.9" /></div>
                 <div class="action-title">ثبت سفارش جدید</div>
                 <div class="action-description">ثبت خرید جدید برای مشتری</div>
             </router-link>
@@ -19,7 +19,7 @@
             </router-link>-->
             
             <router-link to="/reception/orders" class="quick-action">
-                <div class="action-icon">📦</div>
+                <div class="action-icon"><ShoppingBag :size="22" :stroke-width="1.9" /></div>
                 <div class="action-title">سفارشات من</div>
                 <div class="action-description">مشاهده تاریخچه سفارشات</div>
             </router-link> 
@@ -48,8 +48,10 @@
 <script>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { Plus, ShoppingBag } from 'lucide-vue-next';
 
 export default {
+    components: { Plus, ShoppingBag },
     name: 'ReceptionDashboard',
     setup() {
         const todayStats = ref({});

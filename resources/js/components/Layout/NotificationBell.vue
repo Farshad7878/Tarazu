@@ -1,7 +1,7 @@
 <template>
     <div class="bell" ref="root">
         <button class="bell-btn" type="button" @click="toggle" :aria-label="'اعلان‌ها'">
-            🔔
+            <Bell :size="18" :stroke-width="1.9" />
             <span v-if="unreadCount > 0" class="badge">{{ unreadCount > 99 ? '99+' : unreadCount }}</span>
         </button>
 
@@ -34,11 +34,13 @@
 
 <script>
 import axios from 'axios';
+import { Bell } from 'lucide-vue-next';
 
 const POLL_INTERVAL_MS = 60000;
 
 export default {
     name: 'NotificationBell',
+    components: { Bell },
     data() {
         return {
             open: false,
@@ -106,17 +108,25 @@ export default {
 .bell { position: relative; }
 .bell-btn {
     position: relative;
-    background: #edf2f7;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background: var(--surface);
+    color: var(--text-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    font-size: 16px;
+    transition: background-color 0.15s ease;
+}
+.bell-btn:hover {
+    background: var(--surface-muted);
 }
 .badge {
     position: absolute;
-    top: -6px;
-    left: -6px;
+    top: -5px;
+    left: -5px;
     background: #e53e3e;
     color: #fff;
     border-radius: 999px;

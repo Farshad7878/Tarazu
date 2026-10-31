@@ -1,43 +1,57 @@
 <template>
-    <header class="navbar">
-        <div class="navbar-content">
-            <div class="navbar-brand">
-                <h1>{{ appName }}</h1>
-                <span class="user-role" v-if="user">
-                    {{ user.role === 'admin' ? 'مدیر سیستم' : 'ریسپشن' }}
-                </span>
+    <header class="topbar">
+        <div class="topbar-start">
+            <button type="button" class="menu-btn" aria-label="باز کردن منو" @click="$emit('toggle-menu')">
+                <MenuIcon :size="22" :stroke-width="2" />
+            </button>
+            <span class="topbar-brand">{{ appName }}</span>
+            <span class="role-chip">{{ roleLabel }}</span>
+            <span v-if="user?.role === 'reception' && user?.branch" class="branch-chip">
+                <Store :size="14" :stroke-width="2" />
+                {{ user.branch.name }}
+            </span>
+        </div>
+
+        <div class="topbar-end">
+            <NotificationBell v-if="user?.role === 'admin'" />
+
+            <div class="user-chip" :title="user?.name">
+                <span class="avatar" aria-hidden="true">{{ initial }}</span>
+                <span class="user-name">{{ user?.name }}</span>
             </div>
-            
-            <div class="navbar-actions">
-                <NotificationBell v-if="user?.role === 'admin'" />
-                <span class="welcome-message">خوش آمدید, {{ user?.name }}</span>
-                <span v-if="user?.role === 'reception' && user?.branch" class="welcome-message">🏬 {{ user.branch.name }}</span>
-                <button @click="logout" class="logout-btn">
-                    🚪 خروج
-                </button>
-            </div>
+
+            <button type="button" class="icon-btn logout-btn" aria-label="خروج از حساب" title="خروج" @click="logout">
+                <LogOut :size="18" :stroke-width="2" />
+                <span class="logout-label">خروج</span>
+            </button>
         </div>
     </header>
 </template>
 
 <script>
+import { computed } from 'vue';
 import { useAuthStore } from '../../stores/auth';
 import { useRouter } from 'vue-router';
 import { appName } from '../../appConfig';
 import NotificationBell from './NotificationBell.vue';
+import { Menu as MenuIcon, LogOut, Store } from 'lucide-vue-next';
 
 export default {
     name: 'Navbar',
-    components: { NotificationBell },
+    components: { NotificationBell, MenuIcon, LogOut, Store },
     props: {
         user: {
             type: Object,
             required: true
         }
     },
-    setup() {
+    emits: ['toggle-menu'],
+    setup(props) {
         const authStore = useAuthStore();
         const router = useRouter();
+
+        const roleLabel = computed(() => (props.user?.role === 'admin' ? 'مدیر سیستم' : 'ریسپشن'));
+        const initial = computed(() => (props.user?.name || '?').trim().charAt(0).toUpperCase());
 
         const logout = async () => {
             await authStore.logout();
@@ -46,101 +60,184 @@ export default {
 
         return {
             appName,
+            roleLabel,
+            initial,
             logout
         };
     }
-}
+};
 </script>
 
 <style scoped>
-.navbar {
-    background: white;
-    border-bottom: 1px solid #e2e8f0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
     height: 64px;
-}
-
-.navbar-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 100%;
-    padding: 0 24px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.navbar-brand {
-    display: flex;
-    align-items: center;
     gap: 12px;
+    padding: 0 24px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: saturate(160%) blur(8px);
+    border-bottom: 1px solid var(--border);
 }
 
-.navbar-brand h1 {
-    color: #2d3748;
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.user-role {
-    background: #edf2f7;
-    color: #4a5568;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.navbar-actions {
+.topbar-start,
+.topbar-end {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 10px;
+    min-width: 0;
 }
 
-.welcome-message {
-    color: #4a5568;
-    font-weight: 500;
-}
-
-.logout-btn {
-    background: #fed7d7;
-    color: #c53030;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
+.menu-btn {
+    display: none;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-2);
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    font-weight: 500;
-    transition: background 0.3s ease;
+}
+
+.topbar-brand {
+    display: none;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.role-chip {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-2);
+    background: #eef2f7;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.branch-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--brand-ink);
+    background: var(--brand-soft);
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.user-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px 4px 4px;
+    border-radius: 999px;
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    min-width: 0;
+}
+
+.avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2b6cb0, #4c8fd6);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: var(--text-2);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 180px;
+}
+
+.icon-btn,
+.logout-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 38px;
+    padding: 0 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid #f5c2c2;
+    background: var(--danger-soft);
+    color: #b91c1c;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
 }
 
 .logout-btn:hover {
-    background: #feb2b2;
+    background: #fecaca;
 }
-/* Mobile: let the navbar wrap instead of pushing content off the start edge */
+
+.logout-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+
+/* ---- Phones / tablets ---- */
+@media (max-width: 1023px) {
+    .menu-btn {
+        display: inline-flex;
+    }
+
+    .topbar-brand {
+        display: inline;
+    }
+
+    .role-chip {
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
-    .navbar {
-        height: auto;
+    .topbar {
+        padding: 0 12px;
+        height: 60px;
     }
-    .navbar-content {
-        flex-wrap: wrap;
-        height: auto;
-        padding: 10px 12px;
-        gap: 8px;
+
+    .topbar-start .branch-chip {
+        display: none;
     }
-    .navbar-brand {
-        flex-wrap: wrap;
-        min-width: 0;
-        gap: 8px;
+
+    .user-chip {
+        padding: 0;
+        background: transparent;
+        border: none;
     }
-    .navbar-brand h1 {
-        font-size: 1.1rem;
+
+    .user-name {
+        display: none;
     }
-    .navbar-actions {
-        flex-wrap: wrap;
-        gap: 8px;
+
+    .logout-label {
+        display: none;
     }
-    .welcome-message {
-        font-size: 0.875rem;
+
+    .logout-btn {
+        width: 38px;
+        padding: 0;
+        justify-content: center;
     }
 }
 </style>

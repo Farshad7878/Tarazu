@@ -1,223 +1,153 @@
 <template>
-    <div class="admin-layout">
-        <Navbar :user="authStore.user" />
-        
-        <div class="layout-container">
-            <aside class="sidebar">
-                <nav class="sidebar-nav">
-                    <router-link 
-        to="/admin/dashboard" 
-        class="nav-item"
-        :class="{ active: $route.name === 'admin.dashboard' }"
-    >
-        📊 داشبورد
-                    </router-link>
-                    <router-link 
-                        to="/admin/customers" 
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.customers' }"
-                    >
-                        👨‍👩‍👧‍👦 مدیریت مشتریان
-                    </router-link>
-                    <router-link 
-                        to="/admin/categories" 
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.categories' }"
-                    >
-                        🗂️ مدیریت دسته‌بندی‌ها
-                    </router-link>
-                    <router-link 
-                        to="/admin/products" 
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.products' }"
-                    >
-                        📦 مدیریت محصولات
-                    </router-link>
-                    <router-link 
-                        to="/admin/discounts" 
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.discounts' }"
-                    >
-                        🎫 مدیریت تخفیف‌ها
-                    </router-link>
-                    <router-link
-                        to="/admin/sms-campaigns"
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.sms-campaigns' }"
-                    >
-                        📣 پیامک گروهی
-                    </router-link>
-                    <router-link
-                        to="/admin/cash-shifts"
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.cash-shifts' }"
-                    >
-                        🧾 صندوق و مغایرت
-                    </router-link>
-                    <router-link
-                        to="/admin/purchase-orders"
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.purchase-orders' }"
-                    >
-                        🚚 خرید و تأمین‌کنندگان
-                    </router-link>
-                    <router-link
-                        to="/admin/branches"
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.branches' }"
-                    >
-                        🏬 شعبه‌ها
-                    </router-link>
-                    <router-link
-                        to="/admin/stock-transfers"
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.stock-transfers' }"
-                    >
-                        🔁 انتقال موجودی
-                    </router-link>
-                    <router-link
-                        to="/admin/gift-cards"
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.gift-cards' }"
-                    >
-                        🎁 گیفت کارت
-                    </router-link>
-                    <router-link
-                        to="/admin/barcode-labels"
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.barcode-labels' }"
-                    >
-                        🏷️ چاپ برچسب
-                    </router-link>
-                    <router-link to="/admin/reports" class="nav-item">
-                        📈 گزارشات
-                    </router-link>
-                    <router-link
-                        to="/admin/audit-logs"
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.audit-logs' }"
-                    >
-                        🕵️ گزارش فعالیت‌ها
-                    </router-link>
-                    <router-link
-                        to="/admin/backups"
-                        class="nav-item"
-                        :class="{ active: $route.name === 'admin.backups' }"
-                    >
-                        💾 پشتیبان و بازیابی
-                    </router-link>
-                    <router-link to="/admin/users" class="nav-item">
-                        👤 مدیریت کاربران
-                    </router-link>
-                </nav>
-            </aside>
+    <div class="app-shell">
+        <AppSidebar role="admin" :groups="groups" :open="menuOpen" @close="menuOpen = false" />
+
+        <div class="app-body">
+            <Navbar :user="authStore.user" @toggle-menu="menuOpen = !menuOpen" />
 
             <main class="main-content">
                 <router-view />
             </main>
         </div>
+
+        <div v-if="menuOpen" class="scrim" aria-hidden="true" @click="menuOpen = false"></div>
     </div>
 </template>
 
 <script>
+import { ref } from 'vue';
 import { useAuthStore } from '../../stores/auth';
+import { useRoute } from 'vue-router';
 import Navbar from './Navbar.vue';
+import AppSidebar from './AppSidebar.vue';
+import {
+    LayoutDashboard,
+    Users,
+    Megaphone,
+    Gift,
+    Percent,
+    Layers,
+    Package,
+    Truck,
+    ArrowLeftRight,
+    Tags,
+    Store,
+    Receipt,
+    ChartColumn,
+    UserCog,
+    ScrollText,
+    DatabaseBackup
+} from 'lucide-vue-next';
+
+const groups = [
+    {
+        title: 'عمومی',
+        items: [{ to: '/admin/dashboard', label: 'داشبورد', icon: LayoutDashboard }]
+    },
+    {
+        title: 'فروش و مشتریان',
+        items: [
+            { to: '/admin/customers', label: 'مشتریان', icon: Users },
+            { to: '/admin/discounts', label: 'تخفیف‌ها', icon: Percent },
+            { to: '/admin/gift-cards', label: 'گیفت کارت', icon: Gift },
+            { to: '/admin/sms-campaigns', label: 'پیامک گروهی', icon: Megaphone }
+        ]
+    },
+    {
+        title: 'کالا و انبار',
+        items: [
+            { to: '/admin/products', label: 'محصولات', icon: Package },
+            { to: '/admin/categories', label: 'دسته‌بندی‌ها', icon: Layers },
+            { to: '/admin/purchase-orders', label: 'خرید و تأمین‌کنندگان', icon: Truck },
+            { to: '/admin/stock-transfers', label: 'انتقال موجودی', icon: ArrowLeftRight },
+            { to: '/admin/barcode-labels', label: 'چاپ برچسب', icon: Tags },
+            { to: '/admin/branches', label: 'شعبه‌ها', icon: Store }
+        ]
+    },
+    {
+        title: 'مالی و گزارش',
+        items: [
+            { to: '/admin/cash-shifts', label: 'صندوق و مغایرت', icon: Receipt },
+            { to: '/admin/reports', label: 'گزارشات', icon: ChartColumn }
+        ]
+    },
+    {
+        title: 'سیستم',
+        items: [
+            { to: '/admin/users', label: 'کاربران', icon: UserCog },
+            { to: '/admin/audit-logs', label: 'گزارش فعالیت‌ها', icon: ScrollText },
+            { to: '/admin/backups', label: 'پشتیبان و بازیابی', icon: DatabaseBackup }
+        ]
+    }
+];
 
 export default {
     name: 'AdminLayout',
     components: {
-        Navbar
+        Navbar,
+        AppSidebar
     },
     setup() {
         const authStore = useAuthStore();
-        
+        const route = useRoute();
+        const menuOpen = ref(false);
+
         return {
-            authStore
+            authStore,
+            groups,
+            menuOpen,
+            route
         };
     }
-}
+};
 </script>
 
 <style scoped>
-.admin-layout {
-    min-height: 100vh;
-    background-color: #f8fafc;
-}
-
-.layout-container {
+.app-shell {
     display: flex;
-    min-height: calc(100vh - 64px);
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg);
 }
 
-.sidebar {
-    width: 250px;
-    background: white;
-    border-left: 1px solid #e2e8f0;
-    padding: 20px 0;
-}
-
-.sidebar-nav {
+.app-body {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 0 16px;
-}
-
-.nav-item {
-    padding: 12px 16px;
-    text-decoration: none;
-    color: #4a5568;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.nav-item:hover {
-    background-color: #edf2f7;
-    color: #2d3748;
-}
-
-.nav-item.active {
-    background-color: #ebf8ff;
-    color: #3182ce;
-    border-right: 3px solid #3182ce;
 }
 
 .main-content {
     flex: 1;
-    min-width: 0;
-    padding: 24px;
-    overflow-y: auto;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 28px 48px;
+    box-sizing: border-box;
 }
-/* Mobile: stack the sidebar above the content instead of squeezing the page */
-@media (max-width: 768px) {
-    .layout-container {
-        flex-direction: column;
-    }
 
-    .sidebar {
-        width: 100%;
-        border-left: none;
-        border-bottom: 1px solid #e2e8f0;
-        padding: 8px 0;
-    }
+.scrim {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.4);
+    z-index: 55;
+}
 
-    /* wrap instead of horizontal scroll: in RTL, overflow to the start edge cannot be scrolled to */
-    .sidebar-nav {
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 0 8px;
-        gap: 6px;
+@media (min-width: 1024px) {
+    .scrim {
+        display: none;
     }
+}
 
-    .nav-item {
-        white-space: nowrap;
-        padding: 8px 10px;
-        font-size: 14px;
-    }
-
+@media (max-width: 1023px) {
     .main-content {
-        padding: 16px 12px;
+        padding: 20px 18px 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 16px 12px 40px;
     }
 }
 </style>

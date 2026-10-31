@@ -181,23 +181,6 @@ export default {
 </script>
 
 <style scoped>
-.modal-medium {
-    max-width: 600px;
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 24px;
-}
-
-.modal-footer {
-    padding: 20px 24px;
-    border-top: 1px solid #e2e8f0;
-}
 
 .customer-section,
 .order-details-section,
@@ -406,31 +389,9 @@ export default {
     margin-bottom: 2px;
 }
 
-.modal-footer {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
 .footer-actions {
     display: flex;
     gap: 12px;
-}
-
-.btn-cancel {
-    background: #fed7d7;
-    border: 2px solid #feb2b2;
-    color: #c53030;
-    padding: 12px 24px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    flex: 1;
-    transition: all 0.3s ease;
-}
-
-.btn-cancel:hover {
-    background: #feb2b2;
 }
 
 .btn-confirm {
@@ -459,10 +420,6 @@ export default {
 }
 
 @media (max-width: 768px) {
-    .modal-medium {
-        margin: 20px;
-        max-height: calc(100vh - 40px);
-    }
     
     .footer-actions {
         flex-direction: column;
@@ -482,9 +439,6 @@ export default {
 }
 
 @media (max-width: 480px) {
-    .modal-content {
-        padding: 0 16px;
-    }
     
     .customer-info,
     .summary-grid,
@@ -497,11 +451,6 @@ export default {
     }
 }
 
-/* انیمیشن‌ها */
-.modal-overlay {
-    animation: fadeIn 0.2s ease-out;
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -509,10 +458,6 @@ export default {
     to {
         opacity: 1;
     }
-}
-
-.modal {
-    animation: slideUp 0.3s ease-out;
 }
 
 @keyframes slideUp {

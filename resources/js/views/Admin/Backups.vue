@@ -11,7 +11,7 @@
         <div v-if="message" :class="['flash', messageType]">{{ message }}</div>
 
         <div class="table-container">
-            <table v-if="backups.length" class="data-table">
+            <div class="table-scroll" v-if="backups.length"><table class="data-table">
                 <thead>
                     <tr>
                         <th>نام فایل</th>
@@ -32,7 +32,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
             <div v-else-if="!loading" class="empty">هنوز پشتیبانی ساخته نشده است.</div>
             <div v-if="loading" class="empty">در حال بارگذاری...</div>
         </div>
@@ -190,8 +190,6 @@ export default {
 
 <style scoped>
 .backup-page { padding: 24px; }
-.page-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
-.page-header h2 { margin: 0 0 4px; }
 .muted { color: #718096; font-size: 0.85rem; margin: 0; }
 .flash { padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; }
 .flash.success { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; }
@@ -202,17 +200,8 @@ export default {
 .data-table th { background: #f7fafc; color: #4a5568; }
 .code { font-family: monospace; direction: ltr; text-align: left; }
 .actions { display: flex; gap: 6px; }
-.btn-primary { padding: 8px 14px; background: #2b6cb0; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
-.btn-primary:disabled, .btn-small:disabled, .btn-danger:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-small { padding: 5px 10px; border: 1px solid #cbd5e0; background: #fff; border-radius: 6px; cursor: pointer; }
 .btn-warn { color: #975a16; border-color: #f6e05e; }
-.btn-danger { padding: 6px 12px; color: #c53030; border: 1px solid #feb2b2; background: #fff; border-radius: 6px; cursor: pointer; }
-.btn-cancel { padding: 6px 12px; background: #fff; border: 1px solid #cbd5e0; border-radius: 6px; cursor: pointer; }
 .empty { padding: 30px; text-align: center; color: #718096; }
 .notice { margin-top: 14px; padding: 12px; background: #fffaf0; border: 1px solid #f6ad55; border-radius: 8px; font-size: 0.88rem; line-height: 1.8; }
-.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
-.modal { background: #fff; border-radius: 12px; padding: 18px; width: min(480px, 100%); }
-.modal h3 { margin-top: 0; }
 .confirm-input { width: 100%; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; direction: ltr; }
-.modal-footer { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
 </style>

@@ -23,7 +23,7 @@
         </form>
 
         <div class="table-container">
-            <table v-if="logs.length" class="data-table">
+            <div class="table-scroll" v-if="logs.length"><table class="data-table">
                 <thead>
                     <tr>
                         <th>زمان</th>
@@ -50,7 +50,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
             <div v-else-if="!loading" class="empty">رویدادی با این فیلتر پیدا نشد.</div>
             <div v-if="loading" class="empty">در حال بارگذاری...</div>
         </div>
@@ -123,14 +123,10 @@ export default {
 
 <style scoped>
 .audit-page { padding: 24px; }
-.page-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
-.page-header h2 { margin: 0; }
 .muted { color: #718096; font-size: 0.85rem; }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; background: #fff; padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; }
 .filters input, .filters select { padding: 7px; border: 1px solid #cbd5e0; border-radius: 6px; }
 .filters label { display: flex; gap: 4px; align-items: center; font-size: 0.85rem; }
-.btn-primary { padding: 7px 14px; background: #2b6cb0; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
-.btn-cancel { padding: 7px 14px; background: #fff; border: 1px solid #cbd5e0; border-radius: 8px; cursor: pointer; }
 .table-container { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; overflow-x: auto; }
 .data-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
 .data-table th, .data-table td { padding: 9px; border-bottom: 1px solid #edf2f7; text-align: right; vertical-align: top; }

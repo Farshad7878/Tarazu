@@ -61,7 +61,7 @@
 
         <div class="card">
             <h3>کمپین‌ها</h3>
-            <table v-if="campaigns.length" class="campaigns-table">
+            <div class="table-scroll" v-if="campaigns.length"><table class="campaigns-table">
                 <thead>
                     <tr>
                         <th>نام</th>
@@ -95,7 +95,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
             <div v-else class="empty">هنوز کمپینی ثبت نشده است.</div>
         </div>
 
@@ -215,8 +215,6 @@ export default {
 
 <style scoped>
 .sms-page { padding: 24px; }
-.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
-.page-header h2 { margin: 0; }
 .limit-note { color: #718096; font-size: 0.9rem; }
 .sim-warning { background: #fffaf0; border: 1px solid #f6ad55; color: #7b341e; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; line-height: 1.8; }
 .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin-bottom: 16px; }
@@ -228,10 +226,6 @@ export default {
 .field input, .field select, .field textarea { padding: 8px 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-family: inherit; }
 .actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 .preview-count { color: #2c5282; font-weight: 600; }
-.btn-primary, .btn-secondary, .btn-danger { padding: 9px 16px; border-radius: 6px; cursor: pointer; border: none; }
-.btn-primary { background: #3182ce; color: #fff; }
-.btn-secondary { background: #edf2f7; color: #2d3748; }
-.btn-danger { background: #e53e3e; color: #fff; }
 .btn-danger.small { padding: 5px 10px; font-size: 0.85rem; }
 button:disabled { opacity: 0.6; cursor: not-allowed; }
 .campaigns-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }

@@ -9,7 +9,7 @@
         </div>
 
         <div class="table-container">
-            <table v-if="shifts.length" class="shifts-table">
+            <div class="table-scroll" v-if="shifts.length"><table class="shifts-table">
                 <thead>
                     <tr>
                         <th>کاربر</th>
@@ -37,7 +37,7 @@
                         <td class="notes">{{ s.notes || '' }}</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
             <div v-else-if="!loading" class="empty">موردی یافت نشد.</div>
             <div v-if="loading" class="empty">در حال بارگذاری...</div>
         </div>
@@ -93,8 +93,6 @@ export default {
 
 <style scoped>
 .cash-shifts-page { padding: 24px; }
-.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
-.page-header h2 { margin: 0; }
 .filter-check { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; cursor: pointer; }
 .table-container { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; overflow-x: auto; }
 .shifts-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }

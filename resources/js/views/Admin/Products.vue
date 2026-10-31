@@ -42,7 +42,7 @@
         </div>
 
         <div class="table-container">
-            <table class="products-table">
+            <div class="table-scroll"><table class="products-table">
                 <thead>
                     <tr>
                         <th>نام محصول</th>
@@ -130,7 +130,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <div v-if="loading" class="loading">
                 در حال بارگذاری...
@@ -235,7 +235,7 @@
                     <h4>تاریخچه‌ی موجودی</h4>
                     <div v-if="stockLoading" class="loading">در حال بارگذاری...</div>
                     <div v-else-if="stockHistory.length === 0" class="empty-state">هنوز تغییری ثبت نشده است</div>
-                    <table v-else class="stock-table">
+                    <div class="table-scroll" v-else><table class="stock-table">
                         <thead>
                             <tr>
                                 <th>تاریخ</th>
@@ -260,7 +260,7 @@
                                 <td>{{ row.user_name || '—' }}</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table></div>
 
                     <div v-if="stockPagination.last_page > 1" class="pagination">
                         <button @click="fetchStockHistory(stockPagination.current_page - 1)" :disabled="stockPagination.current_page === 1" class="pagination-btn">قبلی</button>
@@ -777,24 +777,11 @@ export default {
 
 <style scoped>
 .header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.btn-secondary { padding: 8px 14px; background: #fff; border: 1px solid #cbd5e0; border-radius: 8px; text-decoration: none; color: #2d3748; }
 .barcode-text { display: block; font-family: monospace; color: #4a5568; direction: ltr; text-align: right; }
 .variant-text { display: block; color: #6b46c1; }
 
 .products-page {
     padding: 20px;
-}
-
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-}
-
-.page-header h2 {
-    color: #2d3748;
-    font-size: 1.5rem;
 }
 
 .filters {
@@ -1077,136 +1064,6 @@ export default {
     gap: 16px;
     padding: 20px;
     border-top: 1px solid #e2e8f0;
-}
-
-/* Modal Styles (مشابه کامپوننت قبلی) */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 20px;
-}
-
-.modal {
-    background: white;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 24px;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.modal-header h3 {
-    color: #2d3748;
-    margin: 0;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #a0aec0;
-    padding: 0;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.close-btn:hover {
-    color: #4a5568;
-}
-
-.modal-form {
-    padding: 24px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    color: #4a5568;
-    font-weight: 500;
-    font-size: 0.875rem;
-}
-
-.form-group input,
-.form-group select {
-    padding: 12px;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-    outline: none;
-    border-color: #3182ce;
-}
-
-.modal-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid #e2e8f0;
-}
-
-.btn-cancel {
-    background: #f7fafc;
-    border: 1px solid #e2e8f0;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #4a5568;
-    font-weight: 500;
-}
-
-.btn-cancel:hover {
-    background: #edf2f7;
-}
-
-.btn-primary {
-    background: #3182ce;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background 0.3s ease;
-}
-
-.btn-primary:hover:not(:disabled) {
-    background: #2c5aa0;
-}
-
-.btn-primary:disabled {
-    background: #a0aec0;
-    cursor: not-allowed;
 }
 
 .image-row {

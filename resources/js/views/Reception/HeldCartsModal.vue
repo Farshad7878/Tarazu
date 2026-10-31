@@ -61,63 +61,6 @@ export default {
 </script>
 
 <style scoped>
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 16px;
-}
-
-.modal {
-    background: #fff;
-    border-radius: 12px;
-    width: 100%;
-    max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-.modal-medium {
-    max-width: 560px;
-}
-
-.modal-header,
-.modal-footer {
-    padding: 14px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.modal-footer {
-    border-top: 1px solid #e2e8f0;
-    border-bottom: none;
-    justify-content: flex-end;
-}
-
-.modal-header h3 {
-    margin: 0;
-    font-size: 1.1rem;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    line-height: 1;
-}
-
-.modal-content {
-    padding: 14px 18px;
-    overflow-y: auto;
-}
 
 .hint {
     color: #64748b;
@@ -173,20 +116,6 @@ export default {
     display: flex;
     gap: 8px;
 }
-
-.btn-primary,
-.btn-danger,
-.btn-secondary {
-    border: none;
-    border-radius: 8px;
-    padding: 8px 14px;
-    cursor: pointer;
-    color: #fff;
-}
-
-.btn-primary { background: #2563eb; }
-.btn-danger { background: #dc2626; }
-.btn-secondary { background: #64748b; }
 
 button:disabled {
     opacity: 0.5;

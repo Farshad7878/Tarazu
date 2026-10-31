@@ -1,59 +1,75 @@
 <template>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <h1>{{ appName }}</h1>
-                <p>لطفا وارد حساب کاربری خود شوید</p>
+    <div class="login-page">
+        <section class="login-hero" aria-hidden="true">
+            <div class="hero-inner">
+                <img src="/icons/icon-512.png" alt="" class="hero-logo" />
+                <h2>{{ appName }}</h2>
+                <p>مدیریت فروش، موجودی و مشتریان در یک سیستم ساده و یکپارچه.</p>
             </div>
+        </section>
 
-            <form @submit.prevent="handleLogin" class="login-form">
-                <div class="form-group">
-                    <label for="email">ایمیل</label>
-                    <input
-                        type="email"
-                        id="email"
-                        v-model="form.email"
-                        required
-                        placeholder="example@company.com"
-                    >
+        <main class="login-main">
+            <div class="login-card">
+                <div class="login-brand">
+                    <img src="/icons/icon-192.png" alt="" class="brand-logo" width="44" height="44" />
+                    <span>{{ appName }}</span>
                 </div>
 
-                <div class="form-group">
-                    <label for="password">رمز عبور</label>
-                    <input
-                        type="password"
-                        id="password"
-                        v-model="form.password"
-                        required
-                        placeholder="••••••••"
-                    >
-                </div>
+                <h1>ورود به حساب کاربری</h1>
+                <p class="login-subtitle">لطفاً ایمیل و رمز عبور خود را وارد کنید.</p>
 
-                <button type="submit" class="login-btn" :disabled="loading">
-                    <span v-if="loading">در حال ورود...</span>
-                    <span v-else>ورود به سیستم</span>
-                </button>
+                <form @submit.prevent="handleLogin" class="login-form" novalidate>
+                    <div class="form-group">
+                        <label for="email">ایمیل</label>
+                        <input
+                            type="email"
+                            id="email"
+                            v-model="form.email"
+                            required
+                            autocomplete="username"
+                            placeholder="example@company.com"
+                        >
+                    </div>
 
-                <div v-if="notice" class="notice-message">
-                    {{ notice }}
-                </div>
+                    <div class="form-group">
+                        <label for="password">رمز عبور</label>
+                        <input
+                            type="password"
+                            id="password"
+                            v-model="form.password"
+                            required
+                            autocomplete="current-password"
+                            placeholder="••••••••"
+                        >
+                    </div>
 
-                <div v-if="error" class="error-message">
-                    {{ error }}
-                </div>
-            </form>
+                    <button type="submit" class="login-btn" :disabled="loading">
+                        <span v-if="loading">در حال ورود...</span>
+                        <span v-else>ورود به سیستم</span>
+                    </button>
 
-            <!-- حساب‌های دمو فقط در محیط توسعه نمایش داده می‌شوند -->
-            <div v-if="isDev" class="demo-accounts">
-                <h3>حساب‌های دمو (فقط توسعه):</h3>
-                <div class="demo-account">
-                    <strong>ادمین:</strong> admin@example.com / password
-                </div>
-                <div class="demo-account">
-                    <strong>ریسپشن:</strong> reception@example.com / password
+                    <div v-if="notice" class="notice-message" role="status">
+                        {{ notice }}
+                    </div>
+
+                    <div v-if="error" class="error-message" role="alert">
+                        {{ error }}
+                    </div>
+                </form>
+
+                <!-- حساب‌های دمو فقط در محیط توسعه نمایش داده می‌شوند -->
+                <div v-if="isDev" class="demo-accounts">
+                    <h3>حساب‌های دمو (فقط توسعه)</h3>
+                    <button type="button" class="demo-account" @click="fillDemo('admin@example.com')">
+                        <strong>ادمین</strong><span>admin@example.com</span>
+                    </button>
+                    <button type="button" class="demo-account" @click="fillDemo('reception@example.com')">
+                        <strong>ریسپشن</strong><span>reception@example.com</span>
+                    </button>
+                    <p class="demo-hint">رمز عبور هر دو حساب: password</p>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 </template>
 
@@ -103,6 +119,12 @@ export default {
             loading.value = false;
         };
 
+        // پر کردن سریع فرم با حساب دمو (فقط در توسعه)؛ رمز را کاربر خودش وارد می‌کند.
+        const fillDemo = (email) => {
+            form.value.email = email;
+            form.value.password = 'password';
+        };
+
         return {
             appName,
             form,
@@ -110,134 +132,216 @@ export default {
             error,
             notice,
             isDev,
-            handleLogin
+            handleLogin,
+            fillDemo
         };
     }
 }
 </script>
 
 <style scoped>
-.notice-message {
-    margin-top: 12px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    background: #fef3c7;
-    color: #92400e;
-    font-size: 14px;
+.login-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(360px, 480px);
+    background: var(--bg);
 }
 
-.login-container {
-    min-height: 100vh;
+.login-hero {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px;
+    padding: 48px;
+    color: #fff;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 45%),
+        linear-gradient(145deg, #1e4e80 0%, #2b6cb0 55%, #3b82c4 100%);
+    overflow: hidden;
+}
+
+.hero-inner {
+    max-width: 440px;
+}
+
+.hero-logo {
+    width: 88px;
+    height: 88px;
+    border-radius: 22px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+}
+
+.hero-inner h2 {
+    color: #fff;
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin: 24px 0 8px;
+}
+
+.hero-inner p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    opacity: 0.92;
+    margin: 0;
+}
+
+.login-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 24px;
 }
 
 .login-card {
-    background: white;
-    border-radius: 16px;
-    padding: 40px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
 }
 
-.login-header {
-    text-align: center;
-    margin-bottom: 32px;
+.login-brand {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--text);
+    margin-bottom: 28px;
 }
 
-.login-header h1 {
-    color: #2d3748;
-    font-size: 1.5rem;
-    margin-bottom: 8px;
+.brand-logo {
+    border-radius: 12px;
 }
 
-.login-header p {
-    color: #718096;
+.login-card h1 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    margin: 0;
 }
 
-.login-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.login-subtitle {
+    color: var(--text-muted);
+    margin: 6px 0 28px;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+.login-form .form-group {
+    margin-bottom: 18px;
 }
 
-.form-group label {
-    color: #4a5568;
-    font-weight: 500;
-    font-size: 0.875rem;
-}
-
-.form-group input {
-    padding: 12px 16px;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
+.login-form input {
+    padding: 12px 14px;
     font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #3182ce;
 }
 
 .login-btn {
-    background: #3182ce;
-    color: white;
+    width: 100%;
+    margin-top: 6px;
+    padding: 13px;
     border: none;
-    padding: 12px 16px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
+    background: var(--brand);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
     font-size: 1rem;
-    font-weight: 500;
     cursor: pointer;
-    transition: background 0.3s ease;
+    box-shadow: 0 6px 16px rgba(43, 108, 176, 0.3);
+    transition: background-color 0.15s ease;
 }
 
 .login-btn:hover:not(:disabled) {
-    background: #2c5aa0;
+    background: var(--brand-hover);
+}
+
+.login-btn:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
 }
 
 .login-btn:disabled {
-    background: #a0aec0;
-    cursor: not-allowed;
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.notice-message,
+.error-message {
+    margin-top: 14px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+}
+
+.notice-message {
+    background: var(--warning-soft);
+    color: var(--warning);
 }
 
 .error-message {
-    background: #fed7d7;
-    color: #c53030;
-    padding: 12px 16px;
-    border-radius: 8px;
-    font-size: 0.875rem;
-    text-align: center;
+    background: var(--danger-soft);
+    color: #b91c1c;
 }
 
 .demo-accounts {
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 1px solid #e2e8f0;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border-strong);
 }
 
 .demo-accounts h3 {
-    color: #4a5568;
-    font-size: 0.875rem;
-    margin-bottom: 12px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0 0 10px;
+    font-weight: 600;
 }
 
 .demo-account {
-    background: #f7fafc;
-    padding: 8px 12px;
-    border-radius: 6px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
     margin-bottom: 8px;
-    font-size: 0.875rem;
-    color: #4a5568;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font: inherit;
+    font-size: 0.85rem;
+    color: var(--text-2);
+    cursor: pointer;
+    text-align: start;
+}
+
+.demo-account:hover {
+    border-color: var(--brand);
+}
+
+.demo-account span {
+    direction: ltr;
+    color: var(--text-muted);
+}
+
+.demo-hint {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 4px 0 0;
+}
+
+@media (max-width: 900px) {
+    .login-page {
+        grid-template-columns: 1fr;
+    }
+
+    .login-hero {
+        display: none;
+    }
+
+    .login-brand {
+        display: flex;
+    }
+
+    .login-main {
+        align-items: flex-start;
+        padding: 40px 20px;
+    }
 }
 </style>

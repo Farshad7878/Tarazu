@@ -1,141 +1,186 @@
 <template>
-    <div class="reception-layout">
-        <Navbar :user="authStore.user" />
-        
-        <div class="layout-container">
-            <aside class="sidebar">
-                <nav class="sidebar-nav">
-                    <router-link 
-                        to="/reception/dashboard" 
-                        class="nav-item"
-                        :class="{ active: $route.name === 'reception.dashboard' }"
-                    >
-                        🏠 صفحه اصلی
-                    </router-link>
-                    <router-link to="/reception/new-order" class="nav-item">
-                        ➕ ثبت سفارش جدید
-                    </router-link>
-                    <router-link to="/reception/shift" class="nav-item">
-                        🧾 صندوق کاری
-                    </router-link>
-                    <router-link to="/reception/customers" class="nav-item">
-                        👥 مشتریان
-                    </router-link>
-                    <router-link to="/reception/orders" class="nav-item">
-                        📦 سفارشات من
-                    </router-link>
-                    <router-link to="/reception/gift-cards" class="nav-item">
-                        🎁 کارت هدیه
-                    </router-link>
-                </nav>
-            </aside>
+    <div class="app-shell">
+        <AppSidebar role="reception" :groups="groups" :open="menuOpen" @close="menuOpen = false" />
+
+        <div class="app-body">
+            <Navbar :user="authStore.user" @toggle-menu="menuOpen = !menuOpen" />
 
             <main class="main-content">
                 <router-view />
             </main>
         </div>
+
+        <nav class="tabbar" aria-label="میانبرهای پذیرش">
+            <router-link
+                v-for="tab in tabs"
+                :key="tab.to"
+                :to="tab.to"
+                class="tab"
+                :class="{ active: isActive(tab.to) }"
+            >
+                <component :is="tab.icon" :size="22" :stroke-width="1.9" />
+                <span>{{ tab.label }}</span>
+            </router-link>
+            <button type="button" class="tab" :class="{ active: menuOpen }" @click="menuOpen = !menuOpen">
+                <MenuIcon :size="22" :stroke-width="1.9" />
+                <span>منو</span>
+            </button>
+        </nav>
+
+        <div v-if="menuOpen" class="scrim" aria-hidden="true" @click="menuOpen = false"></div>
     </div>
 </template>
 
 <script>
+import { ref } from 'vue';
 import { useAuthStore } from '../../stores/auth';
+import { useRoute } from 'vue-router';
 import Navbar from './Navbar.vue';
+import AppSidebar from './AppSidebar.vue';
+import { House, Plus, ShoppingBag, Wallet, Users, Gift, Menu as MenuIcon } from 'lucide-vue-next';
+
+const groups = [
+    {
+        title: 'کار روزانه',
+        items: [
+            { to: '/reception/dashboard', label: 'صفحه اصلی', icon: House },
+            { to: '/reception/new-order', label: 'ثبت سفارش جدید', icon: Plus },
+            { to: '/reception/orders', label: 'سفارشات من', icon: ShoppingBag },
+            { to: '/reception/shift', label: 'صندوق کاری', icon: Wallet }
+        ]
+    },
+    {
+        title: 'مشتریان',
+        items: [
+            { to: '/reception/customers', label: 'مشتریان', icon: Users },
+            { to: '/reception/gift-cards', label: 'کارت هدیه', icon: Gift }
+        ]
+    }
+];
+
+const tabs = [
+    { to: '/reception/new-order', label: 'ثبت سفارش', icon: Plus },
+    { to: '/reception/orders', label: 'سفارش‌ها', icon: ShoppingBag },
+    { to: '/reception/shift', label: 'صندوق', icon: Wallet },
+    { to: '/reception/customers', label: 'مشتریان', icon: Users }
+];
 
 export default {
     name: 'ReceptionLayout',
     components: {
-        Navbar
+        Navbar,
+        AppSidebar,
+        MenuIcon
     },
     setup() {
         const authStore = useAuthStore();
-        
+        const route = useRoute();
+        const menuOpen = ref(false);
+
+        const isActive = (to) => route.path === to || route.path.startsWith(to + '/');
+
         return {
-            authStore
+            authStore,
+            groups,
+            tabs,
+            menuOpen,
+            isActive
         };
     }
-}
+};
 </script>
 
 <style scoped>
-.reception-layout {
-    min-height: 100vh;
-    background-color: #f8fafc;
-}
-
-.layout-container {
+.app-shell {
     display: flex;
-    min-height: calc(100vh - 64px);
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--bg);
 }
 
-.sidebar {
-    width: 250px;
-    background: white;
-    border-left: 1px solid #e2e8f0;
-    padding: 20px 0;
-}
-
-.sidebar-nav {
+.app-body {
+    flex: 1;
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 0 16px;
-}
-
-.nav-item {
-    padding: 12px 16px;
-    text-decoration: none;
-    color: #4a5568;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.nav-item:hover {
-    background-color: #edf2f7;
-    color: #2d3748;
-}
-
-.nav-item.active {
-    background-color: #ebf8ff;
-    color: #3182ce;
-    border-right: 3px solid #3182ce;
 }
 
 .main-content {
     flex: 1;
-    min-width: 0;
-    padding: 24px;
-    overflow-y: auto;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 28px 48px;
+    box-sizing: border-box;
 }
-/* Mobile: stack the sidebar above the content instead of squeezing the page */
-@media (max-width: 768px) {
-    .layout-container {
-        flex-direction: column;
-    }
 
-    .sidebar {
-        width: 100%;
-        border-left: none;
-        border-bottom: 1px solid #e2e8f0;
-        padding: 8px 0;
-    }
+.scrim {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.4);
+    z-index: 55;
+}
 
-    /* wrap instead of horizontal scroll: in RTL, overflow to the start edge cannot be scrolled to */
-    .sidebar-nav {
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 0 8px;
-        gap: 6px;
+@media (min-width: 1024px) {
+    .scrim {
+        display: none;
     }
+}
 
-    .nav-item {
-        white-space: nowrap;
-        padding: 8px 10px;
-        font-size: 14px;
-    }
+/* Bottom tab bar: phones only. */
+.tabbar {
+    display: none;
+}
 
+@media (max-width: 1023px) {
     .main-content {
-        padding: 16px 12px;
+        padding: 20px 18px 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        padding: 16px 12px 96px;
+    }
+
+    .tabbar {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        position: fixed;
+        inset-inline: 0;
+        bottom: 0;
+        z-index: 58;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(8px);
+        border-top: 1px solid var(--border);
+        padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+    }
+
+    .tab {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        min-height: 52px;
+        border: none;
+        background: none;
+        color: var(--text-muted);
+        font: inherit;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+    }
+
+    .tab.active {
+        color: var(--brand);
+        background: var(--brand-soft);
     }
 }
 </style>

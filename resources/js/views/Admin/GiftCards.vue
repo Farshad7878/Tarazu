@@ -28,7 +28,7 @@
         </div>
 
         <div class="table-container">
-            <table v-if="cards.length" class="data-table">
+            <div class="table-scroll" v-if="cards.length"><table class="data-table">
                 <thead>
                     <tr>
                         <th>کد</th>
@@ -61,7 +61,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
             <div v-else-if="!loading" class="empty">گیفت کارتی یافت نشد.</div>
             <div v-if="loading" class="empty">در حال بارگذاری...</div>
         </div>
@@ -154,8 +154,6 @@ export default {
 
 <style scoped>
 .gift-page { padding: 24px; }
-.page-header { margin-bottom: 14px; }
-.page-header h2 { margin: 0; }
 .flash { padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; }
 .flash.success { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; }
 .flash.error { background: #fff5f5; color: #9b2c2c; border: 1px solid #feb2b2; }
@@ -166,9 +164,6 @@ export default {
 .form-actions { display: flex; justify-content: flex-end; margin-top: 10px; }
 .toolbar { display: flex; gap: 8px; margin-bottom: 12px; }
 .muted { color: #718096; font-size: 0.85rem; }
-.btn-primary { padding: 8px 14px; background: #2b6cb0; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
-.btn-primary:disabled { opacity: 0.5; }
-.btn-small { padding: 5px 10px; border: 1px solid #cbd5e0; background: #fff; border-radius: 6px; cursor: pointer; }
 .table-container { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; overflow-x: auto; }
 .data-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
 .data-table th, .data-table td { padding: 10px; border-bottom: 1px solid #edf2f7; text-align: right; white-space: nowrap; }

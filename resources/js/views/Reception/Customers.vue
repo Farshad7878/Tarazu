@@ -17,7 +17,7 @@
         </div>
 
         <div class="table-container">
-            <table class="customers-table">
+            <div class="table-scroll"><table class="customers-table">
                 <thead>
                     <tr>
                         <th>شماره عضویت</th>
@@ -38,7 +38,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <div v-if="loading" class="empty-state">در حال بارگذاری...</div>
             <div v-else-if="customers.length === 0" class="empty-state">مشتری‌ای یافت نشد.</div>
@@ -152,19 +152,6 @@ export default {
     margin: 0 auto;
 }
 
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.page-header h2 {
-    color: #2d3748;
-    font-size: 1.5rem;
-    margin: 0;
-}
-
 .search-box input {
     width: 100%;
     padding: 10px 14px;
@@ -202,15 +189,6 @@ export default {
     background: #edf2f7;
     padding: 2px 8px;
     border-radius: 4px;
-}
-
-.btn-primary {
-    padding: 8px 14px;
-    border-radius: 6px;
-    border: none;
-    background: #3182ce;
-    color: white;
-    cursor: pointer;
 }
 
 .btn-link {

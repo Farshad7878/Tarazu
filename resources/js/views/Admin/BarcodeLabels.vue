@@ -30,7 +30,7 @@
 
             <div class="panel">
                 <h3>برچسب‌های چاپ</h3>
-                <table v-if="items.length" class="data-table">
+                <div class="table-scroll" v-if="items.length"><table class="data-table">
                     <thead>
                         <tr><th>کالا</th><th>بارکد</th><th>قیمت</th><th>تعداد</th><th></th></tr>
                     </thead>
@@ -46,7 +46,7 @@
                             <td><button class="btn-small btn-danger" @click="items.splice(index, 1)">×</button></td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
                 <div v-else class="empty">کالایی انتخاب نشده است.</div>
             </div>
         </div>
@@ -152,8 +152,6 @@ export default {
 
 <style scoped>
 .labels-page { padding: 24px; }
-.page-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
-.page-header h2 { margin: 0 0 4px; }
 .muted { color: #718096; font-size: 0.85rem; }
 .layout { display: grid; grid-template-columns: minmax(min(260px, 100%), 1fr) minmax(320px, 1.4fr); gap: 16px; }
 @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
@@ -168,11 +166,6 @@ export default {
 .data-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
 .data-table th, .data-table td { padding: 7px; border-bottom: 1px solid #edf2f7; text-align: right; }
 .code { font-family: monospace; direction: ltr; }
-.btn-primary { padding: 8px 14px; background: #2b6cb0; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-small { padding: 5px 10px; border: 1px solid #cbd5e0; background: #fff; border-radius: 6px; cursor: pointer; }
-.btn-small:disabled { opacity: 0.5; }
-.btn-danger { color: #c53030; border-color: #feb2b2; }
 .flash { padding: 10px 14px; border-radius: 8px; margin-bottom: 12px; }
 .flash.success { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; }
 .flash.error { background: #fff5f5; color: #9b2c2c; border: 1px solid #feb2b2; }

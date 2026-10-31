@@ -217,25 +217,6 @@ export default {
 </script>
 
 <style scoped>
-.modal-large {
-    max-width: 800px;
-    max-height: 90vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 0 24px;
-}
-
-.modal-footer {
-    padding: 20px 24px;
-    border-top: 1px solid #e2e8f0;
-    display: flex;
-    justify-content: flex-end;
-}
 
 .customer-summary {
     margin-bottom: 24px;

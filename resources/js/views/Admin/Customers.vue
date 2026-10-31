@@ -20,7 +20,7 @@
         </div>
 
         <div class="table-container">
-            <table class="customers-table">
+            <div class="table-scroll"><table class="customers-table">
                 <thead>
                     <tr>
                         <th>شماره اشتراک</th>
@@ -87,7 +87,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <div v-if="loading" class="loading">
                 در حال بارگذاری...
@@ -592,33 +592,6 @@ export default {
     padding: 20px;
 }
 
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-}
-
-.page-header h2 {
-    color: #2d3748;
-    font-size: 1.5rem;
-}
-
-.btn-primary {
-    background: #3182ce;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background 0.3s ease;
-}
-
-.btn-primary:hover {
-    background: #2c5aa0;
-}
-
 .filters {
     margin-bottom: 24px;
 }
@@ -759,121 +732,14 @@ export default {
     font-weight: 500;
 }
 
-/* Modal Styles */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    padding: 20px;
-}
-
-.modal {
-    background: white;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
 .modal-lg {
     max-width: 800px;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 24px;
-    border-bottom: 1px solid #e2e8f0;
-}
-
-.modal-header h3 {
-    color: #2d3748;
-    margin: 0;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #a0aec0;
-    padding: 0;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.close-btn:hover {
-    color: #4a5568;
-}
-
-.modal-form {
-    padding: 24px;
 }
 
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.form-group label {
-    color: #4a5568;
-    font-weight: 500;
-    font-size: 0.875rem;
-}
-
-.form-group input {
-    padding: 12px;
-    border: 2px solid #e2e8f0;
-    border-radius: 8px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: #3182ce;
-}
-
-.modal-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: 1px solid #e2e8f0;
-}
-
-.btn-cancel {
-    background: #f7fafc;
-    border: 1px solid #e2e8f0;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    color: #4a5568;
-    font-weight: 500;
-}
-
-.btn-cancel:hover {
-    background: #edf2f7;
 }
 
 /* Customer Details Styles */

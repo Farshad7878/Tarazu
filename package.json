@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "chart.js": "^4.5.1",
+        "lucide-vue-next": "^1.0.0",
         "pinia": "^3.0.3",
         "vue-router": "^4.6.3"
     }

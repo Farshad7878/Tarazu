@@ -158,7 +158,7 @@
         <div class="recent-orders">
             <h3>🆕 آخرین سفارشات</h3>
             <div class="table-container">
-                <table class="orders-table">
+                <div class="table-scroll"><table class="orders-table">
                     <thead>
                         <tr>
                             <th>شماره سفارش</th>
@@ -181,7 +181,7 @@
                             <td>{{ order.created_at }}</td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
 
                 <div v-if="recentOrders.length === 0" class="empty-state">
                     📝 هیچ سفارشی یافت نشد
@@ -526,21 +526,6 @@ export default {
     margin: 0 auto;
 }
 
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-    gap: 16px;
-}
-
-.page-header h2 {
-    color: #2d3748;
-    font-size: 1.5rem;
-    margin: 0;
-}
-
 .header-actions {
     display: flex;
     gap: 12px;
@@ -746,38 +731,6 @@ export default {
     color: #a0aec0;
 }
 
-.btn-primary {
-    background: #3182ce;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background 0.3s ease;
-    white-space: nowrap;
-}
-
-.btn-primary:hover {
-    background: #2c5aa0;
-}
-
-.btn-secondary {
-    background: #f7fafc;
-    border: 2px solid #e2e8f0;
-    color: #4a5568;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-}
-
-.btn-secondary:hover {
-    background: #edf2f7;
-}
-
 @media (max-width: 1024px) {
     .chart-row {
         grid-template-columns: 1fr;
@@ -785,10 +738,6 @@ export default {
 }
 
 @media (max-width: 768px) {
-    .page-header {
-        flex-direction: column;
-        align-items: stretch;
-    }
     
     .header-actions {
         justify-content: stretch;

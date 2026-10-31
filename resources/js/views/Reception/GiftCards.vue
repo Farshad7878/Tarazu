@@ -107,7 +107,6 @@ export default {
 
 <style scoped>
 .gift-reception-page { padding: 20px; }
-.page-header h2 { margin: 0 0 4px; }
 .muted { color: #718096; font-size: 0.85rem; margin: 0; }
 .flash { padding: 10px 14px; border-radius: 8px; margin: 12px 0; }
 .flash.success { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; }
@@ -116,8 +115,6 @@ export default {
 .card-form { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 6px; }
 .card-form h3 { margin: 0 0 6px; font-size: 1rem; }
 .card-form input, .card-form select { padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; }
-.btn-primary { margin-top: 6px; padding: 9px; background: #2b6cb0; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
-.btn-primary:disabled { opacity: 0.5; }
 .result { margin-top: 8px; padding: 10px; background: #f7fafc; border-radius: 8px; line-height: 1.9; }
 .code { font-family: monospace; direction: ltr; display: inline-block; }
 .ok { color: #276749; font-weight: 600; }

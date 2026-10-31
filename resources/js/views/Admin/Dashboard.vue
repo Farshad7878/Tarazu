@@ -1,13 +1,13 @@
 <template>
     <div class="admin-dashboard">
         <div class="dashboard-header">
-            <h2>📊 داشبورد مدیریت</h2>
+            <h2>داشبورد مدیریت</h2>
             <p>آمار و اطلاعات کلی سیستم</p>
         </div>
 
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-icon">👥</div>
+                <div class="stat-icon"><Users :size="22" :stroke-width="1.9" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ stats.total_customers || 0 }}</div>
                     <div class="stat-label">کل مشتریان</div>
@@ -15,7 +15,7 @@
             </div>
             
             <div class="stat-card">
-                <div class="stat-icon">📦</div>
+                <div class="stat-icon"><Package :size="22" :stroke-width="1.9" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ stats.total_orders || 0 }}</div>
                     <div class="stat-label">کل سفارشات</div>
@@ -23,7 +23,7 @@
             </div>
             
             <div class="stat-card">
-                <div class="stat-icon">👨‍💼</div>
+                <div class="stat-icon"><UserRound :size="22" :stroke-width="1.9" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ stats.total_receptionists || 0 }}</div>
                     <div class="stat-label">ریسپشن‌ها</div>
@@ -31,7 +31,7 @@
             </div>
             
             <div class="stat-card">
-                <div class="stat-icon">🕒</div>
+                <div class="stat-icon"><Clock :size="22" :stroke-width="1.9" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ stats.today_orders || 0 }}</div>
                     <div class="stat-label">سفارشات امروز</div>
@@ -48,7 +48,7 @@
                         :key="activity.id"
                         class="activity-item"
                     >
-                        <div class="activity-icon">🔔</div>
+                        <div class="activity-icon"><Bell :size="22" :stroke-width="1.9" /></div>
                         <div class="activity-content">
                             <div class="activity-message">{{ activity.message }}</div>
                             <div class="activity-time">{{ activity.time }}</div>
@@ -64,22 +64,22 @@
                 <h3>دسترسی سریع</h3>
                 <div class="actions-grid">
                     <router-link to="/admin/customers" class="action-card">
-                        <div class="action-icon">👨‍👩‍👧‍👦</div>
+                        <div class="action-icon"><Users :size="22" :stroke-width="1.9" /></div>
                         <div class="action-title">مدیریت مشتریان</div>
                     </router-link>
                     
                     <router-link to="/admin/products" class="action-card">
-                        <div class="action-icon">📦</div>
+                        <div class="action-icon"><Package :size="22" :stroke-width="1.9" /></div>
                         <div class="action-title">مدیریت محصولات</div>
                     </router-link>
                     
                     <router-link to="/admin/discounts" class="action-card">
-                        <div class="action-icon">🎫</div>
+                        <div class="action-icon"><Ticket :size="22" :stroke-width="1.9" /></div>
                         <div class="action-title">تخفیف‌ها</div>
                     </router-link>
                     
                     <router-link to="/admin/users" class="action-card">
-                        <div class="action-icon">👥</div>
+                        <div class="action-icon"><UserCog :size="22" :stroke-width="1.9" /></div>
                         <div class="action-title">کاربران سیستم</div>
                     </router-link>
                 </div>
@@ -91,8 +91,10 @@
 <script>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { Users, Package, UserRound, Clock, Bell, Ticket, UserCog } from 'lucide-vue-next';
 
 export default {
+    components: { Users, Package, UserRound, Clock, Bell, Ticket, UserCog },
     name: 'AdminDashboard',
     setup() {
         const stats = ref({});
@@ -182,8 +184,14 @@ export default {
 
 .dashboard-content {
     display: grid;
-    grid-template-columns: 1fr 400px;
-    gap: 32px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, min(400px, 100%));
+    gap: 24px;
+}
+
+@media (max-width: 900px) {
+    .dashboard-content {
+        grid-template-columns: minmax(0, 1fr);
+    }
 }
 
 .recent-activity, .quick-actions {

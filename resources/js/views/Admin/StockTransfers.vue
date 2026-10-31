@@ -22,7 +22,7 @@
         </div>
 
         <div class="table-container">
-            <table class="users-table">
+            <div class="table-scroll"><table class="users-table">
                 <thead>
                     <tr>
                         <th>شماره</th>
@@ -51,7 +51,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <div v-if="!loading && transfers.length === 0" class="empty-state">انتقالی ثبت نشده است.</div>
             <div v-if="loading" class="empty-state">در حال بارگذاری...</div>
@@ -145,7 +145,7 @@
                     <p v-if="detail.cancelled_at"><strong>لغو:</strong> {{ detail.cancelled_by || '—' }} — {{ detail.cancelled_at }}</p>
                     <p v-if="detail.notes"><strong>یادداشت:</strong> {{ detail.notes }}</p>
 
-                    <table class="users-table">
+                    <div class="table-scroll"><table class="users-table">
                         <thead>
                             <tr><th>کالا</th><th>تعداد</th></tr>
                         </thead>
@@ -155,7 +155,7 @@
                                 <td>{{ formatNumber(item.quantity) }}</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table></div>
 
                     <div class="modal-actions">
                         <button v-if="detail.status === 'in_transit'" @click="cancel(detail)" class="btn-delete">لغو انتقال</button>
@@ -396,19 +396,6 @@ export default {
     margin: 0 auto;
 }
 
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-}
-
-.page-header h2 {
-    color: #2d3748;
-    font-size: 1.5rem;
-    margin: 0;
-}
-
 .table-container {
     background: white;
     border-radius: 12px;
@@ -474,11 +461,6 @@ export default {
     font-size: 0.9rem;
 }
 
-.btn-primary {
-    background: #3182ce;
-    color: white;
-}
-
 .btn-edit {
     background: #edf2f7;
     color: #2d3748;
@@ -494,77 +476,10 @@ export default {
     cursor: not-allowed;
 }
 
-.btn-cancel {
-    background: #edf2f7;
-    color: #2d3748;
-}
-
 .empty-state {
     padding: 24px;
     text-align: center;
     color: #718096;
-}
-
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 50;
-}
-
-.modal {
-    background: white;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 460px;
-    padding: 24px;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-}
-
-.modal-header h3 {
-    margin: 0;
-    color: #2d3748;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #718096;
-}
-
-.modal-form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.form-group label {
-    color: #4a5568;
-    font-size: 0.9rem;
-}
-
-.form-group input,
-.form-group select {
-    padding: 8px 12px;
-    border: 2px solid #e2e8f0;
-    border-radius: 6px;
 }
 
 .checkbox-label {
@@ -583,12 +498,6 @@ export default {
     font-size: 0.9rem;
 }
 
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-}
-
 .page-hint { color: #4a5568; font-size: 13px; margin: 0 0 16px; line-height: 1.8; }
 .transfers-page code { background: #edf2f7; padding: 2px 6px; border-radius: 4px; }
 .filters { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
@@ -596,5 +505,4 @@ export default {
 .item-row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
 .item-row select { flex: 1; min-width: 0; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; }
 .qty-input { width: 90px; padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; }
-.modal-form p { margin: 6px 0; }
 </style>

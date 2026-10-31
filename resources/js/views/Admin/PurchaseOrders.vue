@@ -21,7 +21,7 @@
             </div>
 
             <div class="table-container">
-                <table v-if="orders.length" class="data-table">
+                <div class="table-scroll" v-if="orders.length"><table class="data-table">
                     <thead>
                         <tr>
                             <th>شماره</th>
@@ -55,7 +55,7 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
                 <div v-else-if="!loading" class="empty">سفارش خریدی ثبت نشده است.</div>
                 <div v-if="loading" class="empty">در حال بارگذاری...</div>
             </div>
@@ -85,7 +85,7 @@
             </form>
 
             <div class="table-container">
-                <table v-if="suppliers.length" class="data-table">
+                <div class="table-scroll" v-if="suppliers.length"><table class="data-table">
                     <thead>
                         <tr>
                             <th>نام</th>
@@ -109,7 +109,7 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
                 <div v-else class="empty">تأمین‌کننده‌ای ثبت نشده است.</div>
             </div>
         </template>
@@ -145,7 +145,7 @@
                         </button>
                     </div>
 
-                    <table v-if="createForm.items.length" class="data-table compact">
+                    <div class="table-scroll" v-if="createForm.items.length"><table class="data-table compact">
                         <thead>
                             <tr><th>کالا</th><th>تعداد</th><th>بهای واحد (تومان)</th><th>جمع</th><th></th></tr>
                         </thead>
@@ -158,7 +158,7 @@
                                 <td><button class="btn-small btn-danger" @click="createForm.items.splice(index, 1)">×</button></td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table></div>
 
                     <label>یادداشت</label>
                     <input v-model="createForm.notes" maxlength="1000">
@@ -182,7 +182,7 @@
                     <p>وضعیت: <strong>{{ detail.status_label }}</strong> — جمع کل: {{ money(detail.total_cost) }}</p>
                     <p v-if="detail.notes" class="muted">{{ detail.notes }}</p>
 
-                    <table class="data-table compact">
+                    <div class="table-scroll"><table class="data-table compact">
                         <thead>
                             <tr><th>کالا</th><th>سفارش</th><th>دریافت‌شده</th><th>باقی‌مانده</th><th>دریافت الان</th><th>بهای واحد</th></tr>
                         </thead>
@@ -210,7 +210,7 @@
                                 </td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table></div>
                     <p class="muted">بهای واحد را فقط وقتی تغییر دهید که با فاکتور فرق دارد؛ بهای تمام‌شده‌ی کالا به میانگین موزون به‌روز می‌شود.</p>
                 </div>
                 <div class="modal-footer">
@@ -483,8 +483,6 @@ export default {
 
 <style scoped>
 .po-page { padding: 24px; }
-.page-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
-.page-header h2 { margin: 0; }
 .tabs { display: flex; gap: 6px; }
 .tabs button { padding: 8px 14px; border: 1px solid #cbd5e0; background: #fff; border-radius: 8px; cursor: pointer; }
 .tabs button.active { background: #2b6cb0; color: #fff; border-color: #2b6cb0; }
@@ -503,11 +501,6 @@ export default {
 .badge-partially_received { background: #fefcbf; color: #744210; }
 .badge-cancelled { background: #fed7d7; color: #822727; }
 .actions { display: flex; gap: 6px; }
-.btn-small { padding: 5px 10px; border: 1px solid #cbd5e0; background: #fff; border-radius: 6px; cursor: pointer; }
-.btn-danger { color: #c53030; border-color: #feb2b2; background: #fff; border-radius: 6px; padding: 6px 12px; cursor: pointer; }
-.btn-primary { padding: 8px 14px; background: #2b6cb0; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
-.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-cancel { padding: 8px 14px; background: #fff; border: 1px solid #cbd5e0; border-radius: 8px; cursor: pointer; }
 .card-form { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 14px; }
 .card-form h3 { margin: 0 0 10px; font-size: 1rem; }
 .form-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(180px, 100%), 1fr)); gap: 8px; }
@@ -517,13 +510,7 @@ export default {
 .pagination { display: flex; gap: 12px; align-items: center; justify-content: center; margin-top: 14px; }
 .pagination button { padding: 6px 12px; border: 1px solid #cbd5e0; background: #fff; border-radius: 6px; cursor: pointer; }
 .pagination button:disabled { opacity: 0.5; cursor: not-allowed; }
-.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4); display: flex; align-items: center; justify-content: center; z-index: 50; padding: 16px; }
-.modal { background: #fff; border-radius: 12px; width: min(760px, 100%); max-height: 90vh; display: flex; flex-direction: column; }
-.modal-header, .modal-footer { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid #edf2f7; }
-.modal-footer { border-top: 1px solid #edf2f7; border-bottom: none; justify-content: flex-end; gap: 8px; }
-.modal-header h3 { margin: 0; }
 .modal-body { padding: 14px 18px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
-.close-btn { background: none; border: none; font-size: 1.4rem; cursor: pointer; }
 .search-row { display: flex; gap: 6px; }
 .search-row input { flex: 1; }
 .results { display: flex; flex-direction: column; gap: 4px; max-height: 160px; overflow-y: auto; }

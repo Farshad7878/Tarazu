@@ -88,7 +88,7 @@
         <!-- لیست سفارشات -->
         <div class="orders-container">
             <div class="table-container">
-                <table class="orders-table">
+                <div class="table-scroll"><table class="orders-table">
                     <thead>
                         <tr>
                             <th>شماره سفارش</th>
@@ -157,7 +157,7 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table></div>
 
                 <!-- وضعیت loading -->
                 <div v-if="loading" class="loading-state">

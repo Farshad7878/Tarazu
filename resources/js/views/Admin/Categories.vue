@@ -12,7 +12,7 @@
         </p>
 
         <div class="table-container">
-            <table class="categories-table">
+            <div class="table-scroll"><table class="categories-table">
                 <thead>
                     <tr>
                         <th>آیکون</th>
@@ -58,7 +58,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <div v-if="loading" class="loading">
                 در حال بارگذاری...
@@ -314,18 +314,6 @@ export default {
     padding: 20px;
 }
 
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.page-header h2 {
-    color: #2d3748;
-    font-size: 1.5rem;
-}
-
 .page-description {
     color: #718096;
     margin-bottom: 24px;
@@ -414,89 +402,10 @@ export default {
     color: #a0aec0;
 }
 
-.btn-primary {
-    background: #3182ce;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.btn-primary:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.modal {
-    background: white;
-    border-radius: 12px;
-    width: min(520px, 92vw);
-    padding: 24px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-}
-
-.modal-header h3 {
-    color: #2d3748;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #a0aec0;
-}
-
-.modal-form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
 .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 14px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.form-group label {
-    color: #4a5568;
-    font-size: 0.875rem;
-    font-weight: 500;
-}
-
-.form-group input[type='text'],
-.form-group input[type='number'],
-.form-group textarea {
-    padding: 8px 12px;
-    border: 2px solid #e2e8f0;
-    border-radius: 6px;
-    font-size: 1rem;
 }
 
 .checkbox-group label {
@@ -518,21 +427,5 @@ export default {
 
 .form-error {
     text-align: center;
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
-    margin-top: 8px;
-}
-
-.btn-cancel {
-    background: #edf2f7;
-    color: #4a5568;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    cursor: pointer;
 }
 </style>

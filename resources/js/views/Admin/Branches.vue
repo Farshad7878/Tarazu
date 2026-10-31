@@ -11,7 +11,7 @@
         </p>
 
         <div class="table-container">
-            <table class="users-table">
+            <div class="table-scroll"><table class="users-table">
                 <thead>
                     <tr>
                         <th>نام شعبه</th>
@@ -45,7 +45,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <div v-if="!loading && branches.length === 0" class="empty-state">هنوز شعبه‌ای ثبت نشده است.</div>
             <div v-if="loading" class="empty-state">در حال بارگذاری...</div>
@@ -225,19 +225,6 @@ export default {
     margin: 0 auto;
 }
 
-.page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-}
-
-.page-header h2 {
-    color: #2d3748;
-    font-size: 1.5rem;
-    margin: 0;
-}
-
 .table-container {
     background: white;
     border-radius: 12px;
@@ -303,11 +290,6 @@ export default {
     font-size: 0.9rem;
 }
 
-.btn-primary {
-    background: #3182ce;
-    color: white;
-}
-
 .btn-edit {
     background: #edf2f7;
     color: #2d3748;
@@ -323,77 +305,10 @@ export default {
     cursor: not-allowed;
 }
 
-.btn-cancel {
-    background: #edf2f7;
-    color: #2d3748;
-}
-
 .empty-state {
     padding: 24px;
     text-align: center;
     color: #718096;
-}
-
-.modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 50;
-}
-
-.modal {
-    background: white;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 460px;
-    padding: 24px;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-}
-
-.modal-header h3 {
-    margin: 0;
-    color: #2d3748;
-}
-
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #718096;
-}
-
-.modal-form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.form-group label {
-    color: #4a5568;
-    font-size: 0.9rem;
-}
-
-.form-group input,
-.form-group select {
-    padding: 8px 12px;
-    border: 2px solid #e2e8f0;
-    border-radius: 6px;
 }
 
 .checkbox-label {
@@ -410,12 +325,6 @@ export default {
 .form-error {
     color: #c53030;
     font-size: 0.9rem;
-}
-
-.modal-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 10px;
 }
 
 .page-hint { color: #4a5568; font-size: 13px; margin: 0 0 16px; line-height: 1.8; }

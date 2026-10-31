@@ -29,7 +29,7 @@
         </div>
 
         <div class="table-container">
-            <table class="discounts-table">
+            <div class="table-scroll"><table class="discounts-table">
                 <thead>
                     <tr>
                         <th>نام تخفیف</th>
@@ -120,7 +120,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
 
             <div v-if="loading" class="loading">
                 در حال بارگذاری...

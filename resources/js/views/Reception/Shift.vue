@@ -62,7 +62,7 @@
 
         <div class="card">
             <h4>تاریخچه‌ی صندوق‌های من</h4>
-            <table class="shift-table" v-if="history.length">
+            <div class="table-scroll" v-if="history.length"><table class="shift-table">
                 <thead>
                     <tr>
                         <th>باز شد</th>
@@ -83,7 +83,7 @@
                         <td :class="differenceClass(s.difference)">{{ s.difference !== null ? formatPrice(s.difference) : '—' }}</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
             <p v-else class="hint">هنوز صندوقی ثبت نشده است.</p>
         </div>
 
@@ -187,7 +187,6 @@ export default {
 
 <style scoped>
 .shift-page { padding: 24px; max-width: 960px; }
-.page-header h2 { margin: 0 0 16px; }
 .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin-bottom: 16px; }
 .card h3, .card h4 { margin: 0 0 10px; }
 .hint { color: #718096; font-size: 0.9rem; }
@@ -201,9 +200,6 @@ export default {
 .summary-item { background: #f7fafc; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; color: #4a5568; }
 .summary-item strong { font-size: 1rem; color: #1a202c; }
 .summary-item.accent { background: #ebf8ff; }
-.btn-primary, .btn-danger { padding: 9px 16px; border: none; border-radius: 6px; color: #fff; cursor: pointer; width: fit-content; }
-.btn-primary { background: #3182ce; }
-.btn-danger { background: #e53e3e; }
 button:disabled { opacity: 0.6; cursor: not-allowed; }
 .shift-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
 .shift-table th, .shift-table td { padding: 8px; border-bottom: 1px solid #edf2f7; text-align: right; }

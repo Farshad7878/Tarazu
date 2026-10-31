@@ -71,18 +71,9 @@ export default {
 </script>
 
 <style scoped>
-.modal-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4); display: flex; align-items: center; justify-content: center; z-index: 60; padding: 16px; }
-.modal { background: #fff; border-radius: 12px; width: min(460px, 100%); }
-.modal-header, .modal-footer { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border-bottom: 1px solid #edf2f7; }
-.modal-footer { border-top: 1px solid #edf2f7; border-bottom: none; justify-content: flex-end; gap: 8px; }
-.modal-header h3 { margin: 0; font-size: 1rem; }
 .modal-body { padding: 14px 18px; display: flex; flex-direction: column; gap: 6px; }
 .modal-body input { padding: 8px; border: 1px solid #cbd5e0; border-radius: 6px; }
 .code { direction: ltr; }
 .muted { color: #718096; font-size: 0.85rem; margin: 0 0 6px; }
 .error { color: #c53030; font-size: 0.88rem; }
-.close-btn { background: none; border: none; font-size: 1.4rem; cursor: pointer; }
-.btn-primary { padding: 8px 14px; background: #2b6cb0; color: #fff; border: none; border-radius: 8px; cursor: pointer; }
-.btn-primary:disabled { opacity: 0.5; }
-.btn-cancel { padding: 8px 14px; background: #fff; border: 1px solid #cbd5e0; border-radius: 8px; cursor: pointer; }
 </style>

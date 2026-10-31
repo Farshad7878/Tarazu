@@ -75,6 +75,26 @@ class GiftCard extends Model
         return ['balance'];
     }
 
+    /**
+     * کد کامل گیفت کارت، کلید مصرف اعتبار است؛ در هر رویداد لاگ فقط ۴ کاراکتر آخر آن می‌آید.
+     * این فیلد در auditSnapshot() (ایجاد/حذف) و auditDirty (ویرایش) هم از auditValue() عبور می‌کند.
+     *
+     * @return array<int, string>
+     */
+    protected function auditMaskedKeys(): array
+    {
+        return ['code'];
+    }
+
+    protected function auditValue(string $key, mixed $value): mixed
+    {
+        if ($key === 'code' && is_string($value) && $value !== '') {
+            return self::maskCode($value);
+        }
+
+        return parent::auditValue($key, $value);
+    }
+
     protected function auditLabel(): string
     {
         return 'گیفت کارت '.self::maskCode((string) $this->code);

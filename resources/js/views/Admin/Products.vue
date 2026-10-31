@@ -820,7 +820,7 @@ export default {
 
 .search-box input {
     width: 100%;
-    padding: 8px 40px 8px 12px;
+    padding: 8px 12px 8px 40px;
     border: 2px solid #e2e8f0;
     border-radius: 6px;
     font-size: 1rem;

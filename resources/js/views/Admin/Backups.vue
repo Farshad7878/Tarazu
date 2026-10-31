@@ -22,10 +22,10 @@
                 </thead>
                 <tbody>
                     <tr v-for="b in backups" :key="b.name">
-                        <td class="code">{{ b.name }}</td>
-                        <td>{{ sizeText(b.size) }}</td>
-                        <td>{{ b.created_at }}</td>
-                        <td class="actions">
+                        <td class="code" data-label="نام فایل">{{ b.name }}</td>
+                        <td data-label="حجم">{{ sizeText(b.size) }}</td>
+                        <td data-label="تاریخ">{{ b.created_at }}</td>
+                        <td class="actions" data-label="عملیات">
                             <button class="btn-small" :disabled="working" @click="download(b)">دانلود</button>
                             <button class="btn-small btn-warn" :disabled="working" @click="openRestore(b)">بازیابی</button>
                             <button class="btn-small btn-danger" :disabled="working" @click="remove(b)">حذف</button>

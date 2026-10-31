@@ -498,3 +498,90 @@ h3 {
     vertical-align: -0.15em;
     flex-shrink: 0;
 }
+
+/* ==========================================================================
+   Tables as cards on phones.
+   Each body cell carries data-label (its column header, set at build time),
+   so every row becomes a card with "label : value" pairs.
+   ========================================================================== */
+@media (max-width: 768px) {
+    .table-scroll {
+        overflow: visible;
+        background: transparent;
+        box-shadow: none;
+        border: 0;
+    }
+
+    .table-scroll > table,
+    .table-scroll table {
+        min-width: 0 !important;
+    }
+
+    .table-scroll table thead {
+        display: none !important;
+    }
+
+    .table-scroll table,
+    .table-scroll tbody {
+        display: block !important;
+        width: 100% !important;
+        border: 0 !important;
+    }
+
+    .table-scroll tr {
+        display: block !important;
+        width: 100% !important;
+        background: var(--surface) !important;
+        border: 1px solid var(--border) !important;
+        border-radius: var(--radius) !important;
+        box-shadow: var(--shadow-sm);
+        margin: 0 0 12px !important;
+        padding: 4px 0 !important;
+    }
+
+    .table-scroll td {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        width: auto !important;
+        min-width: 0;
+        text-align: start !important;
+        padding: 9px 14px !important;
+        border: none !important;
+        border-bottom: 1px solid #eef2f7 !important;
+        background: transparent !important;
+        font-size: 0.9rem;
+        white-space: normal !important;
+        overflow-wrap: anywhere;
+    }
+
+    .table-scroll tr td:last-child {
+        border-bottom: none !important;
+    }
+
+    .table-scroll td[data-label]::before {
+        content: attr(data-label);
+        flex-shrink: 0;
+        max-width: 42%;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        font-weight: 600;
+        line-height: 1.5;
+    }
+
+    .table-scroll td[data-label='']::before {
+        display: none;
+    }
+
+    /* Full-width cells (empty states, section rows) centre without a label. */
+    .table-scroll td[colspan] {
+        display: block !important;
+        text-align: center !important;
+        color: var(--text-muted);
+    }
+
+    .table-scroll td[colspan]::before {
+        content: none !important;
+    }
+}

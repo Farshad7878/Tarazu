@@ -36,14 +36,14 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, index) in items" :key="item.id">
-                            <td>{{ item.name }}</td>
-                            <td>
+                            <td data-label="کالا">{{ item.name }}</td>
+                            <td data-label="بارکد">
                                 <span v-if="item.barcode" class="code">{{ item.barcode }}</span>
                                 <button v-else class="btn-small" :disabled="busyId === item.id" @click="makeBarcode(item)">ساخت بارکد</button>
                             </td>
-                            <td>{{ money(item.price) }}</td>
-                            <td><input v-model.number="item.qty" type="number" min="1" max="500" step="1" class="qty"></td>
-                            <td><button class="btn-small btn-danger" @click="items.splice(index, 1)">×</button></td>
+                            <td data-label="قیمت">{{ money(item.price) }}</td>
+                            <td data-label="تعداد"><input v-model.number="item.qty" type="number" min="1" max="500" step="1" class="qty"></td>
+                            <td data-label="عملیات"><button class="btn-small btn-danger" @click="items.splice(index, 1)">×</button></td>
                         </tr>
                     </tbody>
                 </table></div>

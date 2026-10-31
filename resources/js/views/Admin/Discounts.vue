@@ -45,15 +45,15 @@
                 </thead>
                 <tbody>
                     <tr v-for="discount in discounts" :key="discount.id">
-                        <td>
+                        <td data-label="نام تخفیف">
                             <span class="discount-name">{{ discount.name }}</span>
                         </td>
-                        <td>
+                        <td data-label="نوع">
                             <span :class="['type-badge', `type-${discount.type}`]">
                                 {{ getDiscountTypeFa(discount.type) }}
                             </span>
                         </td>
-                        <td>
+                        <td data-label="مقدار">
                             <span v-if="discount.type === 'percentage'" class="discount-value">
                                 {{ discount.value }}%
                             </span>
@@ -64,12 +64,12 @@
                                 {{ discount.free_product || 'محصول رایگان' }}
                             </span>
                         </td>
-                        <td>
+                        <td data-label="هدف">
                             <span class="target-badge">
                                 {{ discount.target === 'all' ? 'همه مشتریان' : 'مشتری خاص' }}
                             </span>
                         </td>
-                        <td>
+                        <td data-label="شرط اعمال">
                             <div class="condition-info">
                                 <span class="condition-type">{{ getConditionTypeFa(discount.condition_type) }}</span>
                                 <span v-if="discount.condition_value" class="condition-value">
@@ -77,12 +77,12 @@
                                 </span>
                             </div>
                         </td>
-                        <td>
+                        <td data-label="پیام">
                             <span class="discount-message" :title="discount.message">
                                 {{ truncateText(discount.message, 30) }}
                             </span>
                         </td>
-                        <td>
+                        <td data-label="وضعیت">
                             <div class="status-cell">
                                 <span :class="['status-badge', discount.is_active ? 'status-active' : 'status-inactive']">
                                     {{ discount.is_active ? 'فعال' : 'غیرفعال' }}
@@ -92,8 +92,8 @@
                                 </span>
                             </div>
                         </td>
-                        <td>{{ discount.created_at }}</td>
-                        <td>
+                        <td data-label="تاریخ ایجاد">{{ discount.created_at }}</td>
+                        <td data-label="عملیات">
                             <div class="actions">
                                 <button 
                                     @click="editDiscount(discount)"

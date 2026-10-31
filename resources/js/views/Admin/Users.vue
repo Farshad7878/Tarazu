@@ -22,19 +22,19 @@
                 </thead>
                 <tbody>
                     <tr v-for="user in users" :key="user.id">
-                        <td>{{ user.name }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>
+                        <td data-label="نام">{{ user.name }}</td>
+                        <td data-label="ایمیل">{{ user.email }}</td>
+                        <td data-label="نقش">
                             <span class="role-badge">{{ roleLabel(user.role) }}</span>
                         </td>
-                        <td>{{ user.role === 'reception' ? (user.branch_name || 'بدون شعبه') : '—' }}</td>
-                        <td>
+                        <td data-label="شعبه">{{ user.role === 'reception' ? (user.branch_name || 'بدون شعبه') : '—' }}</td>
+                        <td data-label="وضعیت">
                             <span :class="['status-badge', user.is_active ? 'status-active' : 'status-inactive']">
                                 {{ user.is_active ? 'فعال' : 'غیرفعال' }}
                             </span>
                         </td>
-                        <td>{{ user.created_at }}</td>
-                        <td class="actions">
+                        <td data-label="تاریخ ایجاد">{{ user.created_at }}</td>
+                        <td class="actions" data-label="عملیات">
                             <button @click="openEdit(user)" class="btn-edit">ویرایش</button>
                             <button
                                 @click="deleteUser(user)"

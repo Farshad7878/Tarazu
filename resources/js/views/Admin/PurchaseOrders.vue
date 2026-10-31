@@ -35,13 +35,13 @@
                     </thead>
                     <tbody>
                         <tr v-for="po in orders" :key="po.id">
-                            <td>{{ po.po_number }}</td>
-                            <td>{{ po.supplier_name }}<small v-if="po.branch_name" class="form-hint"> — {{ po.branch_name }}</small></td>
-                            <td><span :class="['badge', `badge-${po.status}`]">{{ po.status_label }}</span></td>
-                            <td>{{ money(po.total_cost) }}</td>
-                            <td>{{ po.ordered_at }}</td>
-                            <td>{{ po.received_at || '—' }}</td>
-                            <td class="actions">
+                            <td data-label="شماره">{{ po.po_number }}</td>
+                            <td data-label="تأمین‌کننده">{{ po.supplier_name }}<small v-if="po.branch_name" class="form-hint"> — {{ po.branch_name }}</small></td>
+                            <td data-label="وضعیت"><span :class="['badge', `badge-${po.status}`]">{{ po.status_label }}</span></td>
+                            <td data-label="مبلغ کل">{{ money(po.total_cost) }}</td>
+                            <td data-label="ثبت">{{ po.ordered_at }}</td>
+                            <td data-label="دریافت">{{ po.received_at || '—' }}</td>
+                            <td class="actions" data-label="عملیات">
                                 <button class="btn-small" @click="openDetail(po.id)">
                                     {{ ['ordered', 'partially_received'].includes(po.status) ? 'دریافت کالا' : 'مشاهده' }}
                                 </button>
@@ -98,12 +98,12 @@
                     </thead>
                     <tbody>
                         <tr v-for="s in suppliers" :key="s.id">
-                            <td>{{ s.name }}</td>
-                            <td>{{ s.phone || '—' }}</td>
-                            <td>{{ s.email || '—' }}</td>
-                            <td>{{ s.purchase_orders_count }}</td>
-                            <td>{{ s.is_active ? 'فعال' : 'غیرفعال' }}</td>
-                            <td class="actions">
+                            <td data-label="نام">{{ s.name }}</td>
+                            <td data-label="تلفن">{{ s.phone || '—' }}</td>
+                            <td data-label="ایمیل">{{ s.email || '—' }}</td>
+                            <td data-label="تعداد سفارش">{{ s.purchase_orders_count }}</td>
+                            <td data-label="وضعیت">{{ s.is_active ? 'فعال' : 'غیرفعال' }}</td>
+                            <td class="actions" data-label="عملیات">
                                 <button class="btn-small" @click="editSupplier(s)">ویرایش</button>
                                 <button class="btn-small btn-danger" @click="deleteSupplier(s)">حذف</button>
                             </td>
@@ -151,11 +151,11 @@
                         </thead>
                         <tbody>
                             <tr v-for="(line, index) in createForm.items" :key="line.product_id">
-                                <td>{{ line.name }}</td>
-                                <td><input v-model.number="line.quantity" type="number" min="1" step="1"></td>
-                                <td><input v-model.number="line.unit_cost" type="number" min="0" step="1"></td>
-                                <td>{{ money((line.quantity || 0) * (line.unit_cost || 0)) }}</td>
-                                <td><button class="btn-small btn-danger" @click="createForm.items.splice(index, 1)">×</button></td>
+                                <td data-label="کالا">{{ line.name }}</td>
+                                <td data-label="تعداد"><input v-model.number="line.quantity" type="number" min="1" step="1"></td>
+                                <td data-label="بهای واحد (تومان)"><input v-model.number="line.unit_cost" type="number" min="0" step="1"></td>
+                                <td data-label="جمع">{{ money((line.quantity || 0) * (line.unit_cost || 0)) }}</td>
+                                <td data-label="عملیات"><button class="btn-small btn-danger" @click="createForm.items.splice(index, 1)">×</button></td>
                             </tr>
                         </tbody>
                     </table></div>
@@ -188,11 +188,11 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in detail.items" :key="item.id">
-                                <td>{{ item.product_name }}</td>
-                                <td>{{ item.quantity_ordered }}</td>
-                                <td>{{ item.quantity_received }}</td>
-                                <td>{{ item.remaining }}</td>
-                                <td>
+                                <td data-label="کالا">{{ item.product_name }}</td>
+                                <td data-label="سفارش">{{ item.quantity_ordered }}</td>
+                                <td data-label="دریافت‌شده">{{ item.quantity_received }}</td>
+                                <td data-label="باقی‌مانده">{{ item.remaining }}</td>
+                                <td data-label="دریافت الان">
                                     <input
                                         v-if="item.remaining > 0 && canReceive"
                                         v-model.number="receiveForm[item.id].quantity"
@@ -200,7 +200,7 @@
                                     >
                                     <span v-else>—</span>
                                 </td>
-                                <td>
+                                <td data-label="بهای واحد">
                                     <input
                                         v-if="item.remaining > 0 && canReceive"
                                         v-model.number="receiveForm[item.id].unit_cost"

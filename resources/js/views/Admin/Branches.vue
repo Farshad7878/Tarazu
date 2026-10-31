@@ -26,21 +26,21 @@
                 </thead>
                 <tbody>
                     <tr v-for="branch in branches" :key="branch.id">
-                        <td>
+                        <td data-label="نام شعبه">
                             {{ branch.name }}
                             <span v-if="branch.is_main" class="role-badge">اصلی</span>
                         </td>
-                        <td><code>{{ branch.code }}</code></td>
-                        <td>{{ branch.address || '—' }}</td>
-                        <td>{{ branch.phone || '—' }}</td>
-                        <td>{{ branch.users_count }}</td>
-                        <td>{{ formatNumber(branch.stock_units) }}</td>
-                        <td>
+                        <td data-label="کد"><code>{{ branch.code }}</code></td>
+                        <td data-label="نشانی">{{ branch.address || '—' }}</td>
+                        <td data-label="تلفن">{{ branch.phone || '—' }}</td>
+                        <td data-label="کاربران">{{ branch.users_count }}</td>
+                        <td data-label="مجموع موجودی">{{ formatNumber(branch.stock_units) }}</td>
+                        <td data-label="وضعیت">
                             <span :class="['status-badge', branch.is_active ? 'status-active' : 'status-inactive']">
                                 {{ branch.is_active ? 'فعال' : 'غیرفعال' }}
                             </span>
                         </td>
-                        <td class="actions">
+                        <td class="actions" data-label="عملیات">
                             <button @click="openEdit(branch)" class="btn-edit">ویرایش</button>
                         </td>
                     </tr>

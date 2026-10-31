@@ -102,34 +102,34 @@
                     </thead>
                     <tbody>
                         <tr v-for="order in orders" :key="order.id">
-                            <td>
+                            <td data-label="شماره سفارش">
                                 <span class="order-number">#{{ order.order_number }}</span>
                             </td>
-                            <td>
+                            <td data-label="مشتری">
                                 <div class="customer-info">
                                     <div class="customer-name">{{ order.customer_name }}</div>
                                     <div class="customer-membership">{{ order.customer_membership }}</div>
                                 </div>
                             </td>
-                            <td>
+                            <td data-label="تعداد آیتم‌ها">
                                 <span class="items-count">{{ order.items_count }} عدد</span>
                             </td>
-                            <td>
+                            <td data-label="مبلغ کل">
                                 <span class="price total-amount">{{ formatPrice(order.total_amount) }}</span>
                             </td>
-                            <td>
+                            <td data-label="تخفیف">
                                 <span v-if="order.discount_amount > 0" class="discount-badge">
                                     -{{ formatPrice(order.discount_amount) }}
                                 </span>
                                 <span v-else class="no-discount">--</span>
                             </td>
-                            <td>
+                            <td data-label="تاریخ ثبت">
                                 <div class="date-time">
                                     <div class="date">{{ order.created_date }}</div>
                                     <div class="time">{{ order.created_time }}</div>
                                 </div>
                             </td>
-                            <td>
+                            <td data-label="عملیات">
                                 <div class="actions">
                                     <button 
                                         @click="viewOrderDetails(order)"

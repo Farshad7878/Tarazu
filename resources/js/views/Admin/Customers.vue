@@ -37,37 +37,37 @@
                 </thead>
                 <tbody>
                     <tr v-for="customer in customers" :key="customer.id">
-                        <td>
+                        <td data-label="شماره اشتراک">
                             <span class="membership-badge">
                                 {{ customer.membership_number }}
                             </span>
                         </td>
-                        <td>{{ customer.full_name }}</td>
-                        <td>{{ customer.phone }}</td>
-                        <td>
+                        <td data-label="نام کامل">{{ customer.full_name }}</td>
+                        <td data-label="شماره تماس">{{ customer.phone }}</td>
+                        <td data-label="تاریخ تولد">
                             <span v-if="customer.date_of_birth">
                                 {{ formatDate(customer.date_of_birth) }}
                             </span>
                             <span v-else class="text-muted">--</span>
                         </td>
-                        <td>
+                        <td data-label="مجموع خریدها">
                             <span class="price">
                                 {{ formatPrice(customer.total_purchases) }}
                             </span>
                         </td>
-                        <td>
+                        <td data-label="تعداد سفارشات">
                             <span class="orders-count">
                                 {{ customer.orders_count }}
                             </span>
                         </td>
-                        <td>{{ customer.loyalty_points }}</td>
-                        <td>
+                        <td data-label="امتیاز">{{ customer.loyalty_points }}</td>
+                        <td data-label="پیامک">
                             <span v-if="customer.sms_opt_out" class="sms-badge sms-off">لغو کرده</span>
                             <span v-else-if="customer.sms_consent" class="sms-badge sms-on">دارد</span>
                             <span v-else class="sms-badge sms-off">ندارد</span>
                         </td>
-                        <td>{{ customer.created_at }}</td>
-                        <td>
+                        <td data-label="تاریخ ثبت">{{ customer.created_at }}</td>
+                        <td data-label="عملیات">
                             <div class="actions">
                                 <button 
                                     @click="viewCustomer(customer.id)"

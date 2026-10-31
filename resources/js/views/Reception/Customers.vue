@@ -29,11 +29,11 @@
                 </thead>
                 <tbody>
                     <tr v-for="customer in customers" :key="customer.id">
-                        <td><span class="membership">{{ customer.membership_number }}</span></td>
-                        <td>{{ customer.full_name }}</td>
-                        <td>{{ customer.phone }}</td>
-                        <td>{{ formatPrice(customer.total_purchases) }}</td>
-                        <td>
+                        <td data-label="شماره عضویت"><span class="membership">{{ customer.membership_number }}</span></td>
+                        <td data-label="نام و نام خانوادگی">{{ customer.full_name }}</td>
+                        <td data-label="شماره تماس">{{ customer.phone }}</td>
+                        <td data-label="مجموع خرید (تومان)">{{ formatPrice(customer.total_purchases) }}</td>
+                        <td data-label="عملیات">
                             <button @click="selectedCustomer = customer" class="btn-link">سوابق خرید</button>
                         </td>
                     </tr>

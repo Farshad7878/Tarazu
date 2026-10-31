@@ -78,19 +78,19 @@
                 </thead>
                 <tbody>
                     <tr v-for="c in campaigns" :key="c.id">
-                        <td>
+                        <td data-label="نام">
                             <strong>{{ c.name }}</strong>
                             <div class="msg">{{ c.message }}</div>
                         </td>
-                        <td>{{ c.segment_label }}</td>
-                        <td><span :class="['status', 'status-' + c.status]">{{ c.status_label }}</span></td>
-                        <td>{{ c.total_recipients }}</td>
-                        <td>{{ c.sent_count }}</td>
-                        <td>{{ c.failed_count }}</td>
-                        <td>{{ c.skipped_count }}</td>
-                        <td>{{ c.simulated_count }}</td>
-                        <td>{{ c.created_at }}<div class="muted">{{ c.created_by || '' }}</div></td>
-                        <td>
+                        <td data-label="گروه">{{ c.segment_label }}</td>
+                        <td data-label="وضعیت"><span :class="['status', 'status-' + c.status]">{{ c.status_label }}</span></td>
+                        <td data-label="گیرندگان">{{ c.total_recipients }}</td>
+                        <td data-label="ارسال‌شده">{{ c.sent_count }}</td>
+                        <td data-label="ناموفق">{{ c.failed_count }}</td>
+                        <td data-label="رده‌شده">{{ c.skipped_count }}</td>
+                        <td data-label="شبیه‌سازی">{{ c.simulated_count }}</td>
+                        <td data-label="ثبت">{{ c.created_at }}<div class="muted">{{ c.created_by || '' }}</div></td>
+                        <td data-label="عملیات">
                             <button v-if="c.status === 'active'" class="btn-danger small" :disabled="busy" @click="cancelCampaign(c)">لغو</button>
                         </td>
                     </tr>

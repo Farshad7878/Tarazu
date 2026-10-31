@@ -36,12 +36,12 @@
                 </thead>
                 <tbody>
                     <tr v-for="log in logs" :key="log.id">
-                        <td class="nowrap">{{ log.created_at }}</td>
-                        <td>{{ log.user_name }}</td>
-                        <td><span class="badge">{{ log.action_label }}</span></td>
-                        <td>{{ log.subject_label || '—' }}</td>
-                        <td class="desc">{{ log.description }}</td>
-                        <td>
+                        <td class="nowrap" data-label="زمان">{{ log.created_at }}</td>
+                        <td data-label="کاربر">{{ log.user_name }}</td>
+                        <td data-label="عملیات"><span class="badge">{{ log.action_label }}</span></td>
+                        <td data-label="موضوع">{{ log.subject_label || '—' }}</td>
+                        <td class="desc" data-label="شرح">{{ log.description }}</td>
+                        <td data-label="جزئیات">
                             <details v-if="log.changes">
                                 <summary>تغییرات</summary>
                                 <pre>{{ JSON.stringify(log.changes, null, 2) }}</pre>

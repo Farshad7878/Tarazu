@@ -43,18 +43,18 @@
                 </thead>
                 <tbody>
                     <tr v-for="card in cards" :key="card.id">
-                        <td class="code">{{ card.code }}</td>
-                        <td>{{ money(card.initial_amount) }}</td>
-                        <td>{{ money(card.balance) }}</td>
-                        <td>
+                        <td class="code" data-label="کد">{{ card.code }}</td>
+                        <td data-label="مبلغ اولیه">{{ money(card.initial_amount) }}</td>
+                        <td data-label="مانده">{{ money(card.balance) }}</td>
+                        <td data-label="وضعیت">
                             <span :class="['badge', card.is_usable ? 'badge-ok' : 'badge-off']">
                                 {{ card.is_usable ? 'قابل استفاده' : (card.is_active ? 'تمام‌شده/منقضی' : 'غیرفعال') }}
                             </span>
                         </td>
-                        <td>{{ card.customer_name || '—' }}</td>
-                        <td>{{ card.issued_by || '—' }}</td>
-                        <td>{{ card.expires_at || '—' }}</td>
-                        <td>
+                        <td data-label="مشتری">{{ card.customer_name || '—' }}</td>
+                        <td data-label="صادرکننده">{{ card.issued_by || '—' }}</td>
+                        <td data-label="انقضا">{{ card.expires_at || '—' }}</td>
+                        <td data-label="عملیات">
                             <button class="btn-small" @click="toggle(card)">
                                 {{ card.is_active ? 'غیرفعال کردن' : 'فعال کردن' }}
                             </button>

@@ -58,7 +58,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="product in products" :key="product.id">
-                        <td>
+                        <td data-label="نام محصول">
                             <div class="product-info">
                                 <span class="product-name">{{ product.name }}</span>
                                 <small v-if="product.barcode" class="barcode-text">▌ {{ product.barcode }}</small>
@@ -66,35 +66,35 @@
                                 <small v-else-if="product.variants_count > 0" class="variant-text"><IconPuzzle class="emo-icon" aria-hidden="true" /> {{ product.variants_count }} نسخه</small>
                             </div>
                         </td>
-                        <td>
+                        <td data-label="دسته‌بندی">
                             <span class="category-badge">
                                 {{ product.category_icon }} {{ product.category_name }}
                             </span>
                         </td>
-                        <td>
+                        <td data-label="قیمت (تومان)">
                             <span class="price">
                                 {{ formatPrice(product.price) }}
                             </span>
                         </td>
-                        <td>
+                        <td data-label="موجودی">
                             <span :class="['stock-badge', product.stock_quantity <= product.min_stock ? 'stock-low' : 'stock-ok']">
                                 {{ formatPrice(product.stock_quantity) }}
                             </span>
                             <small class="form-hint">حداقل: {{ formatPrice(product.min_stock) }}</small>
                         </td>
-                        <td>
+                        <td data-label="فعال">
                             <span :class="['status-badge', product.is_active ? 'status-approved' : 'status-pending']">
                                 {{ product.is_active ? 'فعال' : 'غیرفعال' }}
                             </span>
                         </td>
-                        <td>
+                        <td data-label="وضعیت">
                             <span :class="['status-badge', `status-${product.status}`]">
                                 {{ product.status_fa }}
                             </span>
                         </td>
-                        <td>{{ product.created_by }}</td>
-                        <td>{{ product.created_at }}</td>
-                        <td>
+                        <td data-label="ایجاد کننده">{{ product.created_by }}</td>
+                        <td data-label="تاریخ ایجاد">{{ product.created_at }}</td>
+                        <td data-label="عملیات">
                             <div class="actions">
                                 <button
                                     @click="openStockModal(product)"
@@ -248,16 +248,16 @@
                         </thead>
                         <tbody>
                             <tr v-for="row in stockHistory" :key="row.id">
-                                <td>{{ row.created_at }}</td>
-                                <td>{{ row.type_label }}</td>
-                                <td :class="row.quantity_change > 0 ? 'change-plus' : (row.quantity_change < 0 ? 'change-minus' : '')">
+                                <td data-label="تاریخ">{{ row.created_at }}</td>
+                                <td data-label="نوع">{{ row.type_label }}</td>
+                                <td :class="row.quantity_change > 0 ? 'change-plus' : (row.quantity_change < 0 ? 'change-minus' : '')" data-label="تغییر">
                                     {{ row.quantity_change > 0 ? '+' : '' }}{{ row.quantity_change }}
                                 </td>
-                                <td>{{ row.quantity_before }} <IconArrowLeft class="emo-icon" aria-hidden="true" /> {{ row.quantity_after }}</td>
-                                <td>
+                                <td data-label="موجودی">{{ row.quantity_before }} <IconArrowLeft class="emo-icon" aria-hidden="true" /> {{ row.quantity_after }}</td>
+                                <td data-label="دلیل / سفارش">
                                     {{ row.reason || row.order_number || '—' }}
                                 </td>
-                                <td>{{ row.user_name || '—' }}</td>
+                                <td data-label="کاربر">{{ row.user_name || '—' }}</td>
                             </tr>
                         </tbody>
                     </table></div>

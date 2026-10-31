@@ -36,15 +36,15 @@
                 </thead>
                 <tbody>
                     <tr v-for="t in transfers" :key="t.id">
-                        <td><code>{{ t.transfer_number }}</code></td>
-                        <td>از {{ t.from_branch_name }} به {{ t.to_branch_name }}</td>
-                        <td>
+                        <td data-label="شماره"><code>{{ t.transfer_number }}</code></td>
+                        <td data-label="مسیر">از {{ t.from_branch_name }} به {{ t.to_branch_name }}</td>
+                        <td data-label="وضعیت">
                             <span :class="['status-badge', statusClass(t.status)]">{{ t.status_label }}</span>
                         </td>
-                        <td>{{ t.items_count }} قلم / {{ formatNumber(t.total_quantity) }} عدد</td>
-                        <td>{{ t.created_by || '—' }}</td>
-                        <td>{{ t.created_at }}</td>
-                        <td class="actions">
+                        <td data-label="اقلام">{{ t.items_count }} قلم / {{ formatNumber(t.total_quantity) }} عدد</td>
+                        <td data-label="ثبت‌کننده">{{ t.created_by || '—' }}</td>
+                        <td data-label="تاریخ">{{ t.created_at }}</td>
+                        <td class="actions" data-label="عملیات">
                             <button @click="openDetail(t)" class="btn-edit">جزئیات</button>
                             <button v-if="t.status === 'in_transit'" @click="receive(t)" class="btn-edit">دریافت</button>
                             <button v-if="t.status === 'in_transit'" @click="cancel(t)" class="btn-delete">لغو</button>
@@ -151,8 +151,8 @@
                         </thead>
                         <tbody>
                             <tr v-for="item in detail.items" :key="item.id">
-                                <td>{{ item.product_name }}</td>
-                                <td>{{ formatNumber(item.quantity) }}</td>
+                                <td data-label="کالا">{{ item.product_name }}</td>
+                                <td data-label="تعداد">{{ formatNumber(item.quantity) }}</td>
                             </tr>
                         </tbody>
                     </table></div>

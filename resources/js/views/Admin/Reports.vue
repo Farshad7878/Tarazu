@@ -171,14 +171,14 @@
                     </thead>
                     <tbody>
                         <tr v-for="order in recentOrders" :key="order.id">
-                            <td>
+                            <td data-label="شماره سفارش">
                                 <span class="order-number">#{{ order.order_number }}</span>
                             </td>
-                            <td>{{ order.customer_name }}</td>
-                            <td>{{ order.reception_name }}</td>
-                            <td class="price">{{ formatPrice(order.total_amount) }}</td>
-                            <td class="discount">{{ formatPrice(order.discount_amount) }}</td>
-                            <td>{{ order.created_at }}</td>
+                            <td data-label="مشتری">{{ order.customer_name }}</td>
+                            <td data-label="ریسپشن">{{ order.reception_name }}</td>
+                            <td class="price" data-label="مبلغ">{{ formatPrice(order.total_amount) }}</td>
+                            <td class="discount" data-label="تخفیف">{{ formatPrice(order.discount_amount) }}</td>
+                            <td data-label="تاریخ">{{ order.created_at }}</td>
                         </tr>
                     </tbody>
                 </table></div>

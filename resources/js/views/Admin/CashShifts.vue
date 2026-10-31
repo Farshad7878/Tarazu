@@ -24,17 +24,17 @@
                 </thead>
                 <tbody>
                     <tr v-for="s in shifts" :key="s.id">
-                        <td>{{ s.user_name }}</td>
-                        <td>{{ s.opened_at }}</td>
-                        <td>{{ s.closed_at || 'باز' }}</td>
-                        <td>{{ formatPrice(s.opening_cash) }}</td>
-                        <td>{{ s.expected_cash !== null ? formatPrice(s.expected_cash) : '—' }}</td>
-                        <td>{{ s.counted_cash !== null ? formatPrice(s.counted_cash) : '—' }}</td>
-                        <td :class="diffClass(s.difference)">
+                        <td data-label="کاربر">{{ s.user_name }}</td>
+                        <td data-label="باز شد">{{ s.opened_at }}</td>
+                        <td data-label="بسته شد">{{ s.closed_at || 'باز' }}</td>
+                        <td data-label="مبلغ اولیه">{{ formatPrice(s.opening_cash) }}</td>
+                        <td data-label="مورد انتظار">{{ s.expected_cash !== null ? formatPrice(s.expected_cash) : '—' }}</td>
+                        <td data-label="شمرده‌شده">{{ s.counted_cash !== null ? formatPrice(s.counted_cash) : '—' }}</td>
+                        <td :class="diffClass(s.difference)" data-label="مغایرت">
                             <template v-if="s.difference === null">—</template>
                             <template v-else>{{ s.difference > 0 ? '+' : '' }}{{ formatPrice(s.difference) }}</template>
                         </td>
-                        <td class="notes">{{ s.notes || '' }}</td>
+                        <td class="notes" data-label="یادداشت">{{ s.notes || '' }}</td>
                     </tr>
                 </tbody>
             </table></div>

@@ -26,22 +26,22 @@
                 </thead>
                 <tbody>
                     <tr v-for="category in categories" :key="category.id">
-                        <td class="icon-cell">{{ category.icon || '—' }}</td>
-                        <td>
+                        <td class="icon-cell" data-label="آیکون">{{ category.icon || '—' }}</td>
+                        <td data-label="نام دسته‌بندی">
                             <div class="category-name">{{ category.name }}</div>
                             <div v-if="category.description" class="category-description">
                                 {{ category.description }}
                             </div>
                         </td>
-                        <td><code>{{ category.sku_prefix || 'PROD' }}</code></td>
-                        <td>{{ category.sort_order }}</td>
-                        <td>{{ category.products_count }}</td>
-                        <td>
+                        <td data-label="پیشوند SKU"><code>{{ category.sku_prefix || 'PROD' }}</code></td>
+                        <td data-label="ترتیب نمایش">{{ category.sort_order }}</td>
+                        <td data-label="تعداد محصولات">{{ category.products_count }}</td>
+                        <td data-label="وضعیت">
                             <span :class="['status-badge', category.is_active ? 'status-active' : 'status-inactive']">
                                 {{ category.is_active ? 'فعال' : 'غیرفعال' }}
                             </span>
                         </td>
-                        <td>
+                        <td data-label="عملیات">
                             <div class="actions">
                                 <button @click="openEditModal(category)" class="btn-edit" title="ویرایش">
                                     <IconPencil class="emo-icon" aria-hidden="true" />

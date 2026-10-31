@@ -75,12 +75,12 @@
                 </thead>
                 <tbody>
                     <tr v-for="s in history" :key="s.id">
-                        <td>{{ s.opened_at }}</td>
-                        <td>{{ s.closed_at || 'باز' }}</td>
-                        <td>{{ formatPrice(s.opening_cash) }}</td>
-                        <td>{{ s.expected_cash !== null ? formatPrice(s.expected_cash) : '—' }}</td>
-                        <td>{{ s.counted_cash !== null ? formatPrice(s.counted_cash) : '—' }}</td>
-                        <td :class="differenceClass(s.difference)">{{ s.difference !== null ? formatPrice(s.difference) : '—' }}</td>
+                        <td data-label="باز شد">{{ s.opened_at }}</td>
+                        <td data-label="بسته شد">{{ s.closed_at || 'باز' }}</td>
+                        <td data-label="مبلغ اولیه">{{ formatPrice(s.opening_cash) }}</td>
+                        <td data-label="مورد انتظار">{{ s.expected_cash !== null ? formatPrice(s.expected_cash) : '—' }}</td>
+                        <td data-label="شمرده‌شده">{{ s.counted_cash !== null ? formatPrice(s.counted_cash) : '—' }}</td>
+                        <td :class="differenceClass(s.difference)" data-label="مغایرت">{{ s.difference !== null ? formatPrice(s.difference) : '—' }}</td>
                     </tr>
                 </tbody>
             </table></div>

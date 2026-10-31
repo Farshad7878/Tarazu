@@ -2,12 +2,12 @@
     <div class="orders-page">
         <div class="page-header">
             <div class="header-content">
-                <h1>📦 سفارشات من</h1>
+                <h1><IconPackage class="emo-icon" aria-hidden="true" /> سفارشات من</h1>
                 <p>تاریخچه و مدیریت سفارشات ثبت شده</p>
             </div>
             <div class="header-actions">
                 <router-link to="/reception/new-order" class="btn-primary">
-                    ➕ ثبت سفارش جدید
+                    <IconPlus class="emo-icon" aria-hidden="true" /> ثبت سفارش جدید
                 </router-link>
             </div>
         </div>
@@ -23,7 +23,7 @@
                         @input="handleSearch"
                         class="search-input"
                     >
-                    <span class="search-icon">🔍</span>
+                    <span class="search-icon"><IconSearch class="emo-icon" aria-hidden="true" /></span>
                 </div>
 
                 <div class="filter-group">
@@ -48,7 +48,7 @@
                 </div>
 
                 <button @click="resetFilters" class="btn-outline">
-                    🔄 بازنشانی فیلترها
+                    <IconRefreshCw class="emo-icon" aria-hidden="true" /> بازنشانی فیلترها
                 </button>
             </div>
         </div>
@@ -56,28 +56,28 @@
         <!-- آمار سریع -->
         <div class="quick-stats">
             <div class="stat-card">
-                <div class="stat-icon">📦</div>
+                <div class="stat-icon"><IconPackage class="emo-icon" aria-hidden="true" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ stats.total_orders || 0 }}</div>
                     <div class="stat-label">کل سفارشات</div>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">💰</div>
+                <div class="stat-icon"><IconCoins class="emo-icon" aria-hidden="true" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ formatPrice(stats.total_revenue || 0) }}</div>
                     <div class="stat-label">کل درآمد</div>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">🎫</div>
+                <div class="stat-icon"><IconTicket class="emo-icon" aria-hidden="true" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ formatPrice(stats.total_discounts || 0) }}</div>
                     <div class="stat-label">تخفیف اعمال شده</div>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">👥</div>
+                <div class="stat-icon"><IconUsers class="emo-icon" aria-hidden="true" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ stats.unique_customers || 0 }}</div>
                     <div class="stat-label">مشتریان منحصر به فرد</div>
@@ -136,7 +136,7 @@
                                         class="btn-view"
                                         title="مشاهده جزئیات"
                                     >
-                                        👁️
+                                        <IconEye class="emo-icon" aria-hidden="true" />
                                     </button>
                                     <button 
                                         v-if="canCancelOrder(order)"
@@ -144,14 +144,14 @@
                                         class="btn-cancel"
                                         title="لغو سفارش"
                                     >
-                                        ❌
+                                        <IconX class="emo-icon" aria-hidden="true" />
                                     </button>
                                     <button 
                                         @click="reprintOrder(order)"
                                         class="btn-print"
                                         title="چاپ مجدد"
                                     >
-                                        🖨️
+                                        <IconPrinter class="emo-icon" aria-hidden="true" />
                                     </button>
                                 </div>
                             </td>
@@ -167,11 +167,11 @@
 
                 <!-- وضعیت خالی -->
                 <div v-if="!loading && orders.length === 0" class="empty-state">
-                    <div class="empty-icon">📝</div>
+                    <div class="empty-icon"><IconFileText class="emo-icon" aria-hidden="true" /></div>
                     <h3>هیچ سفارشی یافت نشد</h3>
                     <p>هنوز هیچ سفارشی ثبت نکرده‌اید یا سفارشی با فیلترهای انتخابی شما مطابقت ندارد.</p>
                     <router-link to="/reception/new-order" class="btn-primary">
-                        ➕ ثبت اولین سفارش
+                        <IconPlus class="emo-icon" aria-hidden="true" /> ثبت اولین سفارش
                     </router-link>
                 </div>
             </div>
@@ -216,7 +216,7 @@
             <div class="modal modal-large">
                 <div class="modal-header">
                     <h3>
-                        📋 جزئیات سفارش #{{ selectedOrder.order_number }}
+                        <IconClipboardList class="emo-icon" aria-hidden="true" /> جزئیات سفارش #{{ selectedOrder.order_number }}
                         <span v-if="selectedOrder.returned_status !== 'none'" class="return-badge" :class="selectedOrder.returned_status">
                             {{ selectedOrder.returned_status === 'full' ? 'بازگشت کامل' : 'بازگشت جزئی' }}
                         </span>
@@ -227,7 +227,7 @@
                 <div class="modal-content">
                     <!-- اطلاعات مشتری -->
                     <div class="detail-section">
-                        <h4>👤 اطلاعات مشتری</h4>
+                        <h4><IconUser class="emo-icon" aria-hidden="true" /> اطلاعات مشتری</h4>
                         <div class="detail-grid">
                             <div class="detail-item">
                                 <span class="label">نام کامل:</span>
@@ -250,7 +250,7 @@
 
                     <!-- آیتم‌های سفارش -->
                     <div class="detail-section">
-                        <h4>🛒 آیتم‌های سفارش</h4>
+                        <h4><IconShoppingCart class="emo-icon" aria-hidden="true" /> آیتم‌های سفارش</h4>
                         <div class="order-items">
                             <div 
                                 v-for="item in selectedOrder.items"
@@ -273,7 +273,7 @@
 
                     <!-- خلاصه مالی -->
                     <div class="detail-section">
-                        <h4>💰 خلاصه مالی</h4>
+                        <h4><IconCoins class="emo-icon" aria-hidden="true" /> خلاصه مالی</h4>
                         <div class="summary-grid">
                             <div class="summary-item">
                                 <span>جمع کل:</span>
@@ -308,7 +308,7 @@
 
                     <!-- یادداشت‌ها -->
                     <div v-if="selectedOrder.notes" class="detail-section">
-                        <h4>📝 یادداشت سفارش</h4>
+                        <h4><IconFileText class="emo-icon" aria-hidden="true" /> یادداشت سفارش</h4>
                         <div class="notes-content">
                             {{ selectedOrder.notes }}
                         </div>
@@ -316,7 +316,7 @@
 
                     <!-- تخفیف‌های اعمال شده -->
                     <div v-if="selectedOrder.applied_discounts && selectedOrder.applied_discounts.length > 0" class="detail-section">
-                        <h4>🎫 تخفیف‌های اعمال شده</h4>
+                        <h4><IconTicket class="emo-icon" aria-hidden="true" /> تخفیف‌های اعمال شده</h4>
                         <div class="discounts-list">
                             <div 
                                 v-for="discount in selectedOrder.applied_discounts"
@@ -331,7 +331,7 @@
 
                     <!-- تعویض کالا -->
                     <div v-if="(selectedOrder.exchanges && selectedOrder.exchanges.length > 0) || selectedOrder.exchange_of" class="detail-section">
-                        <h4>🔄 تعویض کالا</h4>
+                        <h4><IconRefreshCw class="emo-icon" aria-hidden="true" /> تعویض کالا</h4>
                         <div v-if="selectedOrder.exchange_of" class="return-entry-meta">
                             این سفارش حاصل تعویض کالا از سفارش #{{ selectedOrder.exchange_of }} است.
                         </div>
@@ -345,7 +345,7 @@
 
                     <!-- تاریخچه‌ی بازگشت کالا -->
                     <div v-if="selectedOrder.returns && selectedOrder.returns.length > 0" class="detail-section">
-                        <h4>↩️ تاریخچه‌ی بازگشت کالا</h4>
+                        <h4><IconUndo2 class="emo-icon" aria-hidden="true" /> تاریخچه‌ی بازگشت کالا</h4>
                         <div class="return-history">
                             <div v-for="ret in selectedOrder.returns" :key="ret.id" class="return-entry">
                                 <div class="return-entry-header">
@@ -368,13 +368,13 @@
 
                 <div class="modal-footer">
                     <button v-if="selectedOrder.can_return" @click="openReturnModal" class="btn-warning">
-                        ↩️ بازگشت کالا
+                        <IconUndo2 class="emo-icon" aria-hidden="true" /> بازگشت کالا
                     </button>
                     <button v-if="selectedOrder.can_return" @click="showExchangeModal = true" class="btn-primary">
-                        🔄 تعویض کالا
+                        <IconRefreshCw class="emo-icon" aria-hidden="true" /> تعویض کالا
                     </button>
                     <button @click="reprintOrder(selectedOrder)" class="btn-primary">
-                        🖨️ چاپ فاکتور
+                        <IconPrinter class="emo-icon" aria-hidden="true" /> چاپ فاکتور
                     </button>
                     <button @click="closeOrderModal" class="btn-secondary">
                         بستن
@@ -395,7 +395,7 @@
         <div v-if="showReturnModal && selectedOrder" class="modal-overlay">
             <div class="modal modal-large">
                 <div class="modal-header">
-                    <h3>↩️ بازگشت کالا — سفارش #{{ selectedOrder.order_number }}</h3>
+                    <h3><IconUndo2 class="emo-icon" aria-hidden="true" /> بازگشت کالا — سفارش #{{ selectedOrder.order_number }}</h3>
                     <button @click="closeReturnModal" class="close-btn" :disabled="returnSubmitting">×</button>
                 </div>
 
@@ -406,7 +406,7 @@
                     </p>
 
                     <div class="detail-section">
-                        <h4>🛒 کالاهای قابل بازگشت</h4>
+                        <h4><IconShoppingCart class="emo-icon" aria-hidden="true" /> کالاهای قابل بازگشت</h4>
                         <div class="return-lines">
                             <div v-for="item in returnableItems" :key="item.id" class="return-line">
                                 <div class="item-info">
@@ -477,6 +477,7 @@
 </template>
 
 <script>
+import { ClipboardList as IconClipboardList, Coins as IconCoins, Eye as IconEye, FileText as IconFileText, Package as IconPackage, Plus as IconPlus, Printer as IconPrinter, RefreshCw as IconRefreshCw, Search as IconSearch, ShoppingCart as IconShoppingCart, Ticket as IconTicket, Undo2 as IconUndo2, User as IconUser, Users as IconUsers, X as IconX } from 'lucide-vue-next';
 import { ref, reactive, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { useNotificationStore } from '../../stores/notifications';
@@ -487,7 +488,7 @@ import ExchangeModal from './ExchangeModal.vue';
 
 export default {
     name: 'ReceptionOrders',
-    components: {
+    components: { IconClipboardList, IconCoins, IconEye, IconFileText, IconPackage, IconPlus, IconPrinter, IconRefreshCw, IconSearch, IconShoppingCart, IconTicket, IconUndo2, IconUser, IconUsers, IconX, 
         ExchangeModal
     },
     setup() {

@@ -2,7 +2,7 @@
     <div v-if="show" class="modal-overlay" @click.self="$emit('close')">
         <div class="modal">
             <div class="modal-header">
-                <h3>➕ ثبت مشتری جدید</h3>
+                <h3><IconPlus class="emo-icon" aria-hidden="true" /> ثبت مشتری جدید</h3>
                 <button @click="$emit('close')" class="close-btn">×</button>
             </div>
             
@@ -91,11 +91,13 @@
 </template>
 
 <script>
+import { Plus as IconPlus } from 'lucide-vue-next';
 import { ref } from 'vue';
 import axios from 'axios';
 import { useNotificationStore } from '../../stores/notifications';
 
 export default {
+    components: { IconPlus },
     name: 'CustomerModal',
     props: {
         show: {

@@ -489,3 +489,12 @@ h3 {
         font-size: 1.25rem;
     }
 }
+
+/* Icons that replace former emoji: sized in em so they scale with the text around them. */
+.emo-icon {
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    vertical-align: -0.15em;
+    flex-shrink: 0;
+}

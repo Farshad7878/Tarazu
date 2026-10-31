@@ -2,7 +2,7 @@
     <div class="modal-overlay">
         <div class="modal modal-large">
             <div class="modal-header">
-                <h3>📊 تاریخچه خریدهای {{ customer.full_name }}</h3>
+                <h3><IconChartColumn class="emo-icon" aria-hidden="true" /> تاریخچه خریدهای {{ customer.full_name }}</h3>
                 <button @click="$emit('close')" class="close-btn">×</button>
             </div>
             
@@ -60,7 +60,7 @@
                     </div>
 
                     <div v-else-if="orders.length === 0" class="empty-state">
-                        <div class="empty-icon">📝</div>
+                        <div class="empty-icon"><IconFileText class="emo-icon" aria-hidden="true" /></div>
                         <h4>هیچ سفارشی یافت نشد</h4>
                         <p>این مشتری تاکنون خریدی انجام نداده است.</p>
                     </div>
@@ -102,7 +102,7 @@
                                         ثبت شده توسط: {{ order.reception_name }}
                                     </span>
                                     <span v-if="order.notes" class="order-notes" :title="order.notes">
-                                        📝
+                                        <IconFileText class="emo-icon" aria-hidden="true" />
                                     </span>
                                 </div>
                             </div>
@@ -144,11 +144,13 @@
 </template>
 
 <script>
+import { ChartColumn as IconChartColumn, FileText as IconFileText } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 import { formatPrice, formatDate } from '../../utils/format';
 export default {
+    components: { IconChartColumn, IconFileText },
     name: 'CustomerHistoryModal',
     props: {
         customer: {

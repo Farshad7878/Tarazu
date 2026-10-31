@@ -1,8 +1,8 @@
 <template>
     <div class="users-page branches-page">
         <div class="page-header">
-            <h2>🏬 شعبه‌ها</h2>
-            <button @click="openCreate" class="btn-primary">➕ افزودن شعبه</button>
+            <h2><IconStore class="emo-icon" aria-hidden="true" /> شعبه‌ها</h2>
+            <button @click="openCreate" class="btn-primary"><IconPlus class="emo-icon" aria-hidden="true" /> افزودن شعبه</button>
         </div>
 
         <p class="page-hint">
@@ -102,6 +102,7 @@
 </template>
 
 <script>
+import { Plus as IconPlus, Store as IconStore } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useNotificationStore } from '../../stores/notifications';
@@ -115,6 +116,7 @@ const emptyForm = () => ({
 });
 
 export default {
+    components: { IconPlus, IconStore },
     name: 'AdminBranches',
     setup() {
         const notificationStore = useNotificationStore();

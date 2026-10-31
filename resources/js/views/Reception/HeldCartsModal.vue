@@ -2,7 +2,7 @@
     <div class="modal-overlay" @click.self="$emit('close')">
         <div class="modal modal-medium">
             <div class="modal-header">
-                <h3>⏸ سبدهای معلق</h3>
+                <h3><IconPause class="emo-icon" aria-hidden="true" /> سبدهای معلق</h3>
                 <button type="button" class="close-btn" @click="$emit('close')">×</button>
             </div>
 
@@ -23,14 +23,14 @@
                         </li>
                     </ul>
 
-                    <p v-if="cart.notes" class="held-notes">📝 {{ cart.notes }}</p>
+                    <p v-if="cart.notes" class="held-notes"><IconFileText class="emo-icon" aria-hidden="true" /> {{ cart.notes }}</p>
 
                     <div class="held-actions">
                         <button type="button" class="btn-primary" :disabled="busy" @click="$emit('resume', cart.id)">
-                            ▶️ بازیابی
+                            <IconPlay class="emo-icon" aria-hidden="true" /> بازیابی
                         </button>
                         <button type="button" class="btn-danger" :disabled="busy" @click="$emit('discard', cart.id)">
-                            🗑️ حذف
+                            <IconTrash2 class="emo-icon" aria-hidden="true" /> حذف
                         </button>
                     </div>
                 </div>
@@ -44,9 +44,11 @@
 </template>
 
 <script>
+import { FileText as IconFileText, Pause as IconPause, Play as IconPlay, Trash2 as IconTrash2 } from 'lucide-vue-next';
 import { formatPrice } from '../../utils/format';
 
 export default {
+    components: { IconFileText, IconPause, IconPlay, IconTrash2 },
     name: 'HeldCartsModal',
     props: {
         carts: { type: Array, default: () => [] },

@@ -2,10 +2,10 @@
     <div class="labels-page">
         <div class="page-header bl-no-print">
             <div>
-                <h2>🏷️ چاپ برچسب بارکد</h2>
+                <h2><IconTag class="emo-icon" aria-hidden="true" /> چاپ برچسب بارکد</h2>
                 <p class="muted">برای هر کالا تعداد برچسب را مشخص کنید؛ فقط کالاهایی که بارکد دارند چاپ می‌شوند.</p>
             </div>
-            <button class="btn-primary" :disabled="!printable.length" @click="printLabels">🖨️ چاپ ({{ printable.length }} برچسب)</button>
+            <button class="btn-primary" :disabled="!printable.length" @click="printLabels"><IconPrinter class="emo-icon" aria-hidden="true" /> چاپ ({{ printable.length }} برچسب)</button>
         </div>
 
         <div v-if="message" :class="['flash', messageType, 'bl-no-print']">{{ message }}</div>
@@ -65,11 +65,13 @@
 </template>
 
 <script>
+import { Printer as IconPrinter, Tag as IconTag } from 'lucide-vue-next';
 import { ref, computed } from 'vue';
 import axios from 'axios';
 import { ean13Svg, isValidEan13 } from '../../utils/ean13';
 
 export default {
+    components: { IconPrinter, IconTag },
     name: 'BarcodeLabels',
     setup() {
         const query = ref('');

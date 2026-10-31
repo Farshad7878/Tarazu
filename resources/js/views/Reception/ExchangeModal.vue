@@ -2,7 +2,7 @@
     <div class="modal-overlay" @click.self="closeIfIdle">
         <div class="modal modal-large">
             <div class="modal-header">
-                <h3>🔄 تعویض کالا — سفارش #{{ order.order_number }}</h3>
+                <h3><IconRefreshCw class="emo-icon" aria-hidden="true" /> تعویض کالا — سفارش #{{ order.order_number }}</h3>
                 <button type="button" class="close-btn" :disabled="submitting" @click="closeIfIdle">×</button>
             </div>
 
@@ -14,7 +14,7 @@
 
                 <!-- کالاهای برگشتی -->
                 <section class="block">
-                    <h4>↩️ کالاهای برگشتی از سفارش</h4>
+                    <h4><IconUndo2 class="emo-icon" aria-hidden="true" /> کالاهای برگشتی از سفارش</h4>
                     <p v-if="returnableItems.length === 0" class="hint">کالای قابل بازگشتی در این سفارش نیست.</p>
                     <div v-for="item in returnableItems" :key="item.id" class="line">
                         <div class="line-info">
@@ -42,7 +42,7 @@
 
                 <!-- کالاهای جدید -->
                 <section class="block">
-                    <h4>🛒 کالاهای جدید</h4>
+                    <h4><IconShoppingCart class="emo-icon" aria-hidden="true" /> کالاهای جدید</h4>
                     <input
                         v-model="productSearch"
                         type="text"
@@ -83,7 +83,7 @@
                                     :disabled="submitting"
                                 />
                             </label>
-                            <button type="button" class="remove" :disabled="submitting" @click="removeLine(line.product_id)">✕</button>
+                            <button type="button" class="remove" :disabled="submitting" @click="removeLine(line.product_id)"><IconX class="emo-icon" aria-hidden="true" /></button>
                         </div>
                     </div>
                     <p v-if="hasInvalidNew" class="error-text">تعداد هر کالای جدید باید بین ۱ و موجودی باشد.</p>
@@ -142,6 +142,7 @@
 </template>
 
 <script>
+import { RefreshCw as IconRefreshCw, ShoppingCart as IconShoppingCart, Undo2 as IconUndo2, X as IconX } from 'lucide-vue-next';
 import { ref, reactive, computed, onMounted } from 'vue';
 import axios from 'axios';
 import { formatPrice } from '../../utils/format';
@@ -156,6 +157,7 @@ function firstError(error, fallback) {
 }
 
 export default {
+    components: { IconRefreshCw, IconShoppingCart, IconUndo2, IconX },
     name: 'ExchangeModal',
     props: {
         order: { type: Object, required: true },

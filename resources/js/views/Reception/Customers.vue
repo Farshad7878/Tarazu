@@ -1,9 +1,9 @@
 <template>
     <div class="customers-page">
         <div class="page-header">
-            <h2>👥 مشتریان</h2>
+            <h2><IconUsers class="emo-icon" aria-hidden="true" /> مشتریان</h2>
             <button @click="showCustomerModal = true" class="btn-primary">
-                ➕ ثبت مشتری جدید
+                <IconPlus class="emo-icon" aria-hidden="true" /> ثبت مشتری جدید
             </button>
         </div>
 
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { Plus as IconPlus, Users as IconUsers } from 'lucide-vue-next';
 import { ref, onMounted, onUnmounted } from 'vue';
 import axios from 'axios';
 import { useNotificationStore } from '../../stores/notifications';
@@ -73,7 +74,7 @@ import CustomerHistoryModal from './CustomerHistoryModal.vue';
 
 export default {
     name: 'ReceptionCustomers',
-    components: { CustomerModal, CustomerHistoryModal },
+    components: { IconPlus, IconUsers,  CustomerModal, CustomerHistoryModal },
     setup() {
         const notificationStore = useNotificationStore();
 

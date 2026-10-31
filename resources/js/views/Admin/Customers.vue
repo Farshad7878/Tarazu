@@ -1,9 +1,9 @@
 <template>
     <div class="customers-page">
         <div class="page-header">
-            <h2>👨‍👩‍👧‍👦 مدیریت مشتریان</h2>
+            <h2><IconUsers class="emo-icon" aria-hidden="true" /> مدیریت مشتریان</h2>
             <button @click="showAddModal = true" class="btn-primary">
-                ➕ افزودن مشتری جدید
+                <IconPlus class="emo-icon" aria-hidden="true" /> افزودن مشتری جدید
             </button>
         </div>
 
@@ -15,7 +15,7 @@
                     placeholder="جستجو بر اساس نام، شماره تماس یا شماره اشتراک..."
                     @input="handleSearch"
                 >
-                <span class="search-icon">🔍</span>
+                <span class="search-icon"><IconSearch class="emo-icon" aria-hidden="true" /></span>
             </div>
         </div>
 
@@ -74,14 +74,14 @@
                                     class="btn-view"
                                     title="مشاهده جزئیات"
                                 >
-                                    👁️
+                                    <IconEye class="emo-icon" aria-hidden="true" />
                                 </button>
                                 <button 
                                     @click="editCustomer(customer)"
                                     class="btn-edit"
                                     title="ویرایش"
                                 >
-                                    ✏️
+                                    <IconPencil class="emo-icon" aria-hidden="true" />
                                 </button>
                             </div>
                         </td>
@@ -94,7 +94,7 @@
             </div>
 
             <div v-if="!loading && customers.length === 0" class="empty-state">
-                📝 هیچ مشتری یافت نشد
+                <IconFileText class="emo-icon" aria-hidden="true" /> هیچ مشتری یافت نشد
             </div>
 
             <!-- Pagination -->
@@ -308,10 +308,12 @@
 </template>
 
 <script>
+import { Eye as IconEye, FileText as IconFileText, Pencil as IconPencil, Plus as IconPlus, Search as IconSearch, Users as IconUsers } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 export default {
+    components: { IconEye, IconFileText, IconPencil, IconPlus, IconSearch, IconUsers },
     name: 'Customers',
     setup() {
         const customers = ref([]);

@@ -2,14 +2,14 @@
     <div class="modal-overlay">
         <div class="modal modal-medium">
             <div class="modal-header">
-                <h3>✅ تأیید نهایی سفارش</h3>
+                <h3><IconCircleCheck class="emo-icon" aria-hidden="true" /> تأیید نهایی سفارش</h3>
                 <button @click="$emit('cancel')" class="close-btn">×</button>
             </div>
             
             <div class="modal-content">
                 <!-- اطلاعات مشتری -->
                 <div class="customer-section">
-                    <h4>👤 اطلاعات مشتری</h4>
+                    <h4><IconUser class="emo-icon" aria-hidden="true" /> اطلاعات مشتری</h4>
                     <div class="customer-info">
                         <div class="info-row">
                             <span class="label">نام کامل:</span>
@@ -28,7 +28,7 @@
 
                 <!-- جزئیات سفارش -->
                 <div class="order-details-section">
-                    <h4>🛒 جزئیات سفارش</h4>
+                    <h4><IconShoppingCart class="emo-icon" aria-hidden="true" /> جزئیات سفارش</h4>
                     <div class="order-items">
                         <div 
                             v-for="item in orderData.items"
@@ -49,10 +49,10 @@
 
                 <!-- خلاصه مالی -->
                 <div v-if="orderData.offline" class="offline-estimate-note" style="background:#fff7ed;border:1px solid #fdba74;border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:0.9rem;">
-                    📴 حالت آفلاین: تخفیف‌ها و امتیاز وفاداری فعلاً صفر نمایش داده می‌شوند. سرور هنگام همگام‌سازی آن‌ها را محاسبه می‌کند و مبلغ نهایی ممکن است تغییر کند.
+                    <IconWifiOff class="emo-icon" aria-hidden="true" /> حالت آفلاین: تخفیف‌ها و امتیاز وفاداری فعلاً صفر نمایش داده می‌شوند. سرور هنگام همگام‌سازی آن‌ها را محاسبه می‌کند و مبلغ نهایی ممکن است تغییر کند.
                 </div>
                 <div class="summary-section">
-                    <h4>💰 خلاصه مالی</h4>
+                    <h4><IconCoins class="emo-icon" aria-hidden="true" /> خلاصه مالی</h4>
                     <div class="summary-grid">
                         <div class="summary-item">
                             <span>تعداد آیتم‌ها:</span>
@@ -71,7 +71,7 @@
                             <span class="discount-amount">-{{ formatPrice(orderData.summary.discount) }}</span>
                         </div>
                         <div v-if="orderData.summary.gift_amount > 0" class="summary-item discount">
-                            <span>🎁 کارت هدیه</span>
+                            <span><IconGift class="emo-icon" aria-hidden="true" /> کارت هدیه</span>
                             <span class="discount-amount">-{{ formatPrice(orderData.summary.gift_amount) }}</span>
                         </div>
                         <div class="summary-item total">
@@ -87,7 +87,7 @@
 
                 <!-- یادداشت‌ها -->
                 <div v-if="orderData.notes" class="notes-section">
-                    <h4>📝 یادداشت سفارش</h4>
+                    <h4><IconFileText class="emo-icon" aria-hidden="true" /> یادداشت سفارش</h4>
                     <div class="notes-content">
                         {{ orderData.notes }}
                     </div>
@@ -96,21 +96,21 @@
                 <!-- هشدارها و اطلاعات -->
                 <div class="alerts-section">
                     <div class="alert info">
-                        <span class="alert-icon">ℹ️</span>
+                        <span class="alert-icon">ℹ</span>
                         <div class="alert-content">
                             <strong>توجه:</strong> پس از تأیید، سفارش ثبت شده و امکان ویرایش آن وجود ندارد.
                         </div>
                     </div>
                     
                     <div v-if="hasLowStockItems" class="alert warning">
-                        <span class="alert-icon">⚠️</span>
+                        <span class="alert-icon"><IconTriangleAlert class="emo-icon" aria-hidden="true" /></span>
                         <div class="alert-content">
                             <strong>هشدار موجودی:</strong> برخی از محصولات موجودی کمی دارند.
                         </div>
                     </div>
 
                     <div v-if="hasDiscounts" class="alert success">
-                        <span class="alert-icon">🎫</span>
+                        <span class="alert-icon"><IconTicket class="emo-icon" aria-hidden="true" /></span>
                         <div class="alert-content">
                             <strong>تخفیف اعمال شده:</strong> مشتری از تخفیف‌های ویژه بهره‌مند شده است.
                         </div>
@@ -124,13 +124,13 @@
                         @click="$emit('cancel')"
                         class="btn-cancel"
                     >
-                        ❌ انصراف
+                        <IconX class="emo-icon" aria-hidden="true" /> انصراف
                     </button>
                     <button 
                         @click="$emit('confirm')"
                         class="btn-confirm"
                     >
-                        ✅ تأیید و ثبت سفارش
+                        <IconCircleCheck class="emo-icon" aria-hidden="true" /> تأیید و ثبت سفارش
                     </button>
                 </div>
                 
@@ -143,10 +143,12 @@
 </template>
 
 <script>
+import { CircleCheck as IconCircleCheck, Coins as IconCoins, FileText as IconFileText, Gift as IconGift, ShoppingCart as IconShoppingCart, Ticket as IconTicket, TriangleAlert as IconTriangleAlert, User as IconUser, WifiOff as IconWifiOff, X as IconX } from 'lucide-vue-next';
 import { computed } from 'vue';
 
 import { formatPrice } from '../../utils/format';
 export default {
+    components: { IconCircleCheck, IconCoins, IconFileText, IconGift, IconShoppingCart, IconTicket, IconTriangleAlert, IconUser, IconWifiOff, IconX },
     name: 'OrderConfirmationModal',
     props: {
         orderData: {

@@ -2,7 +2,7 @@
     <div class="modal-overlay" @click.self="$emit('close')">
         <div class="modal">
             <div class="modal-header">
-                <h3>🧩 نسخه‌ی جدید برای «{{ product.name }}»</h3>
+                <h3><IconPuzzle class="emo-icon" aria-hidden="true" /> نسخه‌ی جدید برای «{{ product.name }}»</h3>
                 <button class="close-btn" @click="$emit('close')">×</button>
             </div>
             <form @submit.prevent="submit">
@@ -28,10 +28,12 @@
 </template>
 
 <script>
+import { Puzzle as IconPuzzle } from 'lucide-vue-next';
 import { ref } from 'vue';
 import axios from 'axios';
 
 export default {
+    components: { IconPuzzle },
     name: 'ProductVariantModal',
     props: {
         product: { type: Object, required: true },

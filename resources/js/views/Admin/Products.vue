@@ -1,11 +1,11 @@
 <template>
     <div class="products-page">
         <div class="page-header">
-            <h2>📦 مدیریت محصولات</h2>
+            <h2><IconPackage class="emo-icon" aria-hidden="true" /> مدیریت محصولات</h2>
             <div class="header-actions">
-                <router-link to="/admin/barcode-labels" class="btn-secondary">🏷️ چاپ برچسب</router-link>
+                <router-link to="/admin/barcode-labels" class="btn-secondary"><IconTag class="emo-icon" aria-hidden="true" /> چاپ برچسب</router-link>
                 <button @click="showAddModal = true" class="btn-primary">
-                    ➕ افزودن محصول جدید
+                    <IconPlus class="emo-icon" aria-hidden="true" /> افزودن محصول جدید
                 </button>
             </div>
         </div>
@@ -37,7 +37,7 @@
                     placeholder="جستجو بر اساس نام محصول..."
                     @input="handleSearch"
                 >
-                <span class="search-icon">🔍</span>
+                <span class="search-icon"><IconSearch class="emo-icon" aria-hidden="true" /></span>
             </div>
         </div>
 
@@ -62,8 +62,8 @@
                             <div class="product-info">
                                 <span class="product-name">{{ product.name }}</span>
                                 <small v-if="product.barcode" class="barcode-text">▌ {{ product.barcode }}</small>
-                                <small v-if="product.variant_label" class="variant-text">🧩 نسخه‌ی «{{ product.variant_label }}» از {{ product.parent?.name }}</small>
-                                <small v-else-if="product.variants_count > 0" class="variant-text">🧩 {{ product.variants_count }} نسخه</small>
+                                <small v-if="product.variant_label" class="variant-text"><IconPuzzle class="emo-icon" aria-hidden="true" /> نسخه‌ی «{{ product.variant_label }}» از {{ product.parent?.name }}</small>
+                                <small v-else-if="product.variants_count > 0" class="variant-text"><IconPuzzle class="emo-icon" aria-hidden="true" /> {{ product.variants_count }} نسخه</small>
                             </div>
                         </td>
                         <td>
@@ -101,7 +101,7 @@
                                     class="btn-stock"
                                     title="موجودی و تاریخچه"
                                 >
-                                    📊
+                                    <IconChartColumn class="emo-icon" aria-hidden="true" />
                                 </button>
                                 <button
                                     v-if="!product.parent_product_id"
@@ -109,14 +109,14 @@
                                     class="btn-stock"
                                     title="افزودن نسخه (سایز/رنگ)"
                                 >
-                                    🧩
+                                    <IconPuzzle class="emo-icon" aria-hidden="true" />
                                 </button>
                                 <button 
                                     @click="editProduct(product)"
                                     class="btn-edit"
                                     title="ویرایش"
                                 >
-                                    ✏️
+                                    <IconPencil class="emo-icon" aria-hidden="true" />
                                 </button>
                                 <button 
                                     @click="deleteProduct(product.id)"
@@ -124,7 +124,7 @@
                                     title="حذف"
                                     :disabled="product.status === 'approved'"
                                 >
-                                    🗑️
+                                    <IconTrash2 class="emo-icon" aria-hidden="true" />
                                 </button>
                             </div>
                         </td>
@@ -137,7 +137,7 @@
             </div>
 
             <div v-if="!loading && products.length === 0" class="empty-state">
-                📦 هیچ محصولی یافت نشد
+                <IconPackage class="emo-icon" aria-hidden="true" /> هیچ محصولی یافت نشد
             </div>
 
             <!-- Pagination -->
@@ -168,7 +168,7 @@
         <div v-if="showStockModal && stockProduct" class="modal-overlay">
             <div class="modal modal-wide">
                 <div class="modal-header">
-                    <h3>📦 موجودی — {{ stockProduct.name }}</h3>
+                    <h3><IconPackage class="emo-icon" aria-hidden="true" /> موجودی — {{ stockProduct.name }}</h3>
                     <button @click="closeStockModal" class="close-btn">×</button>
                 </div>
 
@@ -253,7 +253,7 @@
                                 <td :class="row.quantity_change > 0 ? 'change-plus' : (row.quantity_change < 0 ? 'change-minus' : '')">
                                     {{ row.quantity_change > 0 ? '+' : '' }}{{ row.quantity_change }}
                                 </td>
-                                <td>{{ row.quantity_before }} ← {{ row.quantity_after }}</td>
+                                <td>{{ row.quantity_before }} <IconArrowLeft class="emo-icon" aria-hidden="true" /> {{ row.quantity_after }}</td>
                                 <td>
                                     {{ row.reason || row.order_number || '—' }}
                                 </td>
@@ -409,6 +409,7 @@
 </template>
 
 <script>
+import { ArrowLeft as IconArrowLeft, ChartColumn as IconChartColumn, Package as IconPackage, Pencil as IconPencil, Plus as IconPlus, Puzzle as IconPuzzle, Search as IconSearch, Tag as IconTag, Trash2 as IconTrash2 } from 'lucide-vue-next';
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 
@@ -417,7 +418,7 @@ import ProductVariantModal from './ProductVariantModal.vue';
 
 export default {
     name: 'Products',
-    components: { ProductVariantModal },
+    components: { IconArrowLeft, IconChartColumn, IconPackage, IconPencil, IconPlus, IconPuzzle, IconSearch, IconTag, IconTrash2,  ProductVariantModal },
     setup() {
         const products = ref([]);
         const loading = ref(false);

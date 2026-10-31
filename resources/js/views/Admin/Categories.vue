@@ -1,9 +1,9 @@
 <template>
     <div class="categories-page">
         <div class="page-header">
-            <h2>🗂️ مدیریت دسته‌بندی‌ها</h2>
+            <h2><IconFolderOpen class="emo-icon" aria-hidden="true" /> مدیریت دسته‌بندی‌ها</h2>
             <button @click="openAddModal" class="btn-primary">
-                ➕ افزودن دسته‌بندی
+                <IconPlus class="emo-icon" aria-hidden="true" /> افزودن دسته‌بندی
             </button>
         </div>
 
@@ -44,7 +44,7 @@
                         <td>
                             <div class="actions">
                                 <button @click="openEditModal(category)" class="btn-edit" title="ویرایش">
-                                    ✏️
+                                    <IconPencil class="emo-icon" aria-hidden="true" />
                                 </button>
                                 <button
                                     @click="deleteCategory(category)"
@@ -52,7 +52,7 @@
                                     title="حذف"
                                     :disabled="category.products_count > 0"
                                 >
-                                    🗑️
+                                    <IconTrash2 class="emo-icon" aria-hidden="true" />
                                 </button>
                             </div>
                         </td>
@@ -65,7 +65,7 @@
             </div>
 
             <div v-if="!loading && categories.length === 0" class="empty-state">
-                🗂️ هنوز دسته‌بندی‌ای تعریف نشده است
+                <IconFolderOpen class="emo-icon" aria-hidden="true" /> هنوز دسته‌بندی‌ای تعریف نشده است
             </div>
         </div>
 
@@ -93,7 +93,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>آیکون (ایموجی)</label>
-                            <input type="text" v-model="form.icon" maxlength="16" placeholder="☕">
+                            <input type="text" v-model="form.icon" maxlength="16" placeholder="">
                             <small v-if="errors.icon" class="field-error">{{ errors.icon }}</small>
                         </div>
 
@@ -147,6 +147,7 @@
 </template>
 
 <script>
+import { FolderOpen as IconFolderOpen, Pencil as IconPencil, Plus as IconPlus, Trash2 as IconTrash2 } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useNotificationStore } from '../../stores/notifications';
@@ -161,6 +162,7 @@ const emptyForm = () => ({
 });
 
 export default {
+    components: { IconFolderOpen, IconPencil, IconPlus, IconTrash2 },
     name: 'Categories',
     setup() {
         const notificationStore = useNotificationStore();

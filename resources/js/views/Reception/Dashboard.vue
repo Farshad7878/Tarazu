@@ -13,7 +13,7 @@
             </router-link>
             
             <!-- <router-link to="/reception/customers" class="quick-action">
-                <div class="action-icon">👥</div>
+                <div class="action-icon">< class="emo-icon" aria-hidden="true" /></div>
                 <div class="action-title">مدیریت مشتریان</div>
                 <div class="action-description">ثبت و جستجوی مشتریان</div>
             </router-link>-->
@@ -51,7 +51,7 @@ import axios from 'axios';
 import { Plus, ShoppingBag } from 'lucide-vue-next';
 
 export default {
-    components: { Plus, ShoppingBag },
+    components: {  Plus, ShoppingBag },
     name: 'ReceptionDashboard',
     setup() {
         const todayStats = ref({});

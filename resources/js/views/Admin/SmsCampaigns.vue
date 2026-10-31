@@ -1,12 +1,12 @@
 <template>
     <div class="sms-page">
         <div class="page-header">
-            <h2>📣 پیامک گروهی</h2>
+            <h2><IconMegaphone class="emo-icon" aria-hidden="true" /> پیامک گروهی</h2>
             <span class="limit-note">سقف ارسال روزانه: {{ dailyLimit }} پیامک</span>
         </div>
 
         <div v-if="smsLive === false" class="sim-warning">
-            ⚠️ درایور پیامک روی <strong>{{ smsDriver }}</strong> است و هیچ پیامکی به مشتری ارسال نمی‌شود.
+            <IconTriangleAlert class="emo-icon" aria-hidden="true" /> درایور پیامک روی <strong>{{ smsDriver }}</strong> است و هیچ پیامکی به مشتری ارسال نمی‌شود.
             کمپین‌ها فقط شبیه‌سازی می‌شوند؛ آمار «شبیه‌سازی‌شده» است و «ارسال‌شده» نیست.
             برای ارسال واقعی، SMS_DRIVER=kavenegar و کلید API را تنظیم کنید.
         </div>
@@ -104,6 +104,7 @@
 </template>
 
 <script>
+import { Megaphone as IconMegaphone, TriangleAlert as IconTriangleAlert } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
@@ -116,6 +117,7 @@ const emptyForm = () => ({
 });
 
 export default {
+    components: { IconMegaphone, IconTriangleAlert },
     name: 'AdminSmsCampaigns',
     setup() {
         const campaigns = ref([]);

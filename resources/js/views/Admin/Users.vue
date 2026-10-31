@@ -1,9 +1,9 @@
 <template>
     <div class="users-page">
         <div class="page-header">
-            <h2>👤 مدیریت کاربران</h2>
+            <h2><IconUser class="emo-icon" aria-hidden="true" /> مدیریت کاربران</h2>
             <button @click="openCreate" class="btn-primary">
-                ➕ افزودن کاربر
+                <IconPlus class="emo-icon" aria-hidden="true" /> افزودن کاربر
             </button>
         </div>
 
@@ -129,6 +129,7 @@
 </template>
 
 <script>
+import { Plus as IconPlus, User as IconUser } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useAuthStore } from '../../stores/auth';
@@ -145,6 +146,7 @@ const emptyForm = () => ({
 });
 
 export default {
+    components: { IconPlus, IconUser },
     name: 'AdminUsers',
     setup() {
         const authStore = useAuthStore();

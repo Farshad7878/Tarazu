@@ -1,13 +1,13 @@
 <template>
     <div class="reports-page">
         <div class="page-header">
-            <h2>📈 گزارشات و آمار</h2>
+            <h2><IconTrendingUp class="emo-icon" aria-hidden="true" /> گزارشات و آمار</h2>
             <div class="header-actions">
                 <button @click="exportReport" class="btn-secondary">
-                    📊 خروجی (CSV برای Excel)
+                    <IconChartColumn class="emo-icon" aria-hidden="true" /> خروجی (CSV برای Excel)
                 </button>
                 <button @click="refreshData" class="btn-primary">
-                    🔄 بروزرسانی
+                    <IconRefreshCw class="emo-icon" aria-hidden="true" /> بروزرسانی
                 </button>
             </div>
         </div>
@@ -67,7 +67,7 @@
         <!-- کارت‌های آماری -->
         <div class="stats-grid">
             <div class="stat-card primary">
-                <div class="stat-icon">💰</div>
+                <div class="stat-icon"><IconCoins class="emo-icon" aria-hidden="true" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ formatPrice(stats.total_revenue) }}</div>
                     <div class="stat-label">کل درآمد</div>
@@ -78,7 +78,7 @@
             </div>
 
             <div class="stat-card success">
-                <div class="stat-icon">📦</div>
+                <div class="stat-icon"><IconPackage class="emo-icon" aria-hidden="true" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ stats.total_orders }}</div>
                     <div class="stat-label">تعداد سفارشات</div>
@@ -89,7 +89,7 @@
             </div>
 
             <div class="stat-card info">
-                <div class="stat-icon">👥</div>
+                <div class="stat-icon"><IconUsers class="emo-icon" aria-hidden="true" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ stats.total_customers }}</div>
                     <div class="stat-label">مشتریان جدید</div>
@@ -100,7 +100,7 @@
             </div>
 
             <div v-if="stats.total_tax > 0" class="stat-card">
-                <div class="stat-icon">🧾</div>
+                <div class="stat-icon"><IconReceipt class="emo-icon" aria-hidden="true" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ formatPrice(stats.total_tax) }}</div>
                     <div class="stat-label">مالیات (ارزش افزوده)</div>
@@ -108,7 +108,7 @@
             </div>
 
             <div class="stat-card warning">
-                <div class="stat-icon">🎫</div>
+                <div class="stat-icon"><IconTicket class="emo-icon" aria-hidden="true" /></div>
                 <div class="stat-info">
                     <div class="stat-value">{{ formatPrice(stats.total_discounts) }}</div>
                     <div class="stat-label">تخفیف اعمال شده</div>
@@ -123,14 +123,14 @@
         <div class="charts-section">
             <div class="chart-row">
                 <div class="chart-card">
-                    <h3>📊 درآمد روزانه</h3>
+                    <h3><IconChartColumn class="emo-icon" aria-hidden="true" /> درآمد روزانه</h3>
                     <div class="chart-container">
                         <canvas ref="revenueChart"></canvas>
                     </div>
                 </div>
 
                 <div class="chart-card">
-                    <h3>🧾 فروش بر اساس دسته‌بندی</h3>
+                    <h3><IconReceipt class="emo-icon" aria-hidden="true" /> فروش بر اساس دسته‌بندی</h3>
                     <div class="chart-container">
                         <canvas ref="productsChart"></canvas>
                     </div>
@@ -139,14 +139,14 @@
 
             <div class="chart-row">
                 <div class="chart-card">
-                    <h3>👨‍💼 عملکرد ریسپشن‌ها</h3>
+                    <h3><IconBriefcase class="emo-icon" aria-hidden="true" /> عملکرد ریسپشن‌ها</h3>
                     <div class="chart-container">
                         <canvas ref="receptionChart"></canvas>
                     </div>
                 </div>
 
                 <div class="chart-card">
-                    <h3>🕒 ساعات پرترافیک</h3>
+                    <h3><IconClock class="emo-icon" aria-hidden="true" /> ساعات پرترافیک</h3>
                     <div class="chart-container">
                         <canvas ref="hoursChart"></canvas>
                     </div>
@@ -156,7 +156,7 @@
 
         <!-- جدول سفارشات اخیر -->
         <div class="recent-orders">
-            <h3>🆕 آخرین سفارشات</h3>
+            <h3><IconSparkles class="emo-icon" aria-hidden="true" /> آخرین سفارشات</h3>
             <div class="table-container">
                 <div class="table-scroll"><table class="orders-table">
                     <thead>
@@ -184,7 +184,7 @@
                 </table></div>
 
                 <div v-if="recentOrders.length === 0" class="empty-state">
-                    📝 هیچ سفارشی یافت نشد
+                    <IconFileText class="emo-icon" aria-hidden="true" /> هیچ سفارشی یافت نشد
                 </div>
             </div>
         </div>
@@ -192,6 +192,7 @@
 </template>
 
 <script>
+import { Briefcase as IconBriefcase, ChartColumn as IconChartColumn, Clock as IconClock, Coins as IconCoins, FileText as IconFileText, Package as IconPackage, Receipt as IconReceipt, RefreshCw as IconRefreshCw, Sparkles as IconSparkles, Ticket as IconTicket, TrendingUp as IconTrendingUp, Users as IconUsers } from 'lucide-vue-next';
 import { ref, nextTick, onMounted, onUnmounted } from 'vue';
 import axios from 'axios';
 import { useNotificationStore } from '../../stores/notifications';
@@ -201,6 +202,7 @@ import { formatPrice } from '../../utils/format';
 const CHART_COLORS = ['#38a169', '#3182ce', '#dd6b20', '#805ad5', '#d53f8c', '#319795', '#718096'];
 
 export default {
+    components: { IconBriefcase, IconChartColumn, IconClock, IconCoins, IconFileText, IconPackage, IconReceipt, IconRefreshCw, IconSparkles, IconTicket, IconTrendingUp, IconUsers },
     name: 'Reports',
     setup() {
         const stats = ref({});

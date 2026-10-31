@@ -1,9 +1,9 @@
 <template>
     <div class="discounts-page">
         <div class="page-header">
-            <h2>🎫 مدیریت تخفیف‌ها</h2>
+            <h2><IconTicket class="emo-icon" aria-hidden="true" /> مدیریت تخفیف‌ها</h2>
             <button @click="showAddModal = true" class="btn-primary">
-                ➕ ایجاد تخفیف جدید
+                <IconPlus class="emo-icon" aria-hidden="true" /> ایجاد تخفیف جدید
             </button>
         </div>
 
@@ -100,21 +100,21 @@
                                     class="btn-edit"
                                     title="ویرایش"
                                 >
-                                    ✏️
+                                    <IconPencil class="emo-icon" aria-hidden="true" />
                                 </button>
                                 <button 
                                     @click="toggleDiscountStatus(discount)"
                                     :class="['btn-toggle', discount.is_active ? 'btn-deactivate' : 'btn-activate']"
                                     :title="discount.is_active ? 'غیرفعال کردن' : 'فعال کردن'"
                                 >
-                                    {{ discount.is_active ? '⏸️' : '▶️' }}
+                                    <component :is="emojiIcon(discount.is_active ? '⏸' : '▶')" class="emo-icon" />
                                 </button>
                                 <button 
                                     @click="assignToCustomer(discount)"
                                     class="btn-assign"
                                     title="اختصاص به مشتری"
                                 >
-                                    👤
+                                    <IconUser class="emo-icon" aria-hidden="true" />
                                 </button>
                             </div>
                         </td>
@@ -127,7 +127,7 @@
             </div>
 
             <div v-if="!loading && discounts.length === 0" class="empty-state">
-                🎫 هیچ تخفیفی یافت نشد
+                <IconTicket class="emo-icon" aria-hidden="true" /> هیچ تخفیفی یافت نشد
             </div>
         </div>
 
@@ -295,7 +295,7 @@
         <div v-if="showAssignModal" class="modal-overlay">
             <div class="modal">
                 <div class="modal-header">
-                    <h3>👤 اختصاص تخفیف به مشتری</h3>
+                    <h3><IconUser class="emo-icon" aria-hidden="true" /> اختصاص تخفیف به مشتری</h3>
                     <button @click="closeAssignModal" class="close-btn">×</button>
                 </div>
                 
@@ -344,6 +344,8 @@
 </template>
 
 <script>
+import { emojiIcon } from '../../utils/emojiIcons';
+import { Pencil as IconPencil, Plus as IconPlus, Ticket as IconTicket, User as IconUser } from 'lucide-vue-next';
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 import { useNotificationStore } from '../../stores/notifications';
@@ -358,6 +360,8 @@ const firstValidationError = (error) => {
 };
 
 export default {
+    methods: { emojiIcon },
+    components: { IconPencil, IconPlus, IconTicket, IconUser },
     name: 'Discounts',
     setup() {
         const discounts = ref([]);

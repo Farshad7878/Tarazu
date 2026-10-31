@@ -1,7 +1,7 @@
 <template>
     <div class="shift-page">
         <div class="page-header">
-            <h2>🧾 صندوق کاری</h2>
+            <h2><IconReceipt class="emo-icon" aria-hidden="true" /> صندوق کاری</h2>
         </div>
 
         <div v-if="loading" class="loading">در حال بارگذاری...</div>
@@ -54,7 +54,7 @@
                 شمرده‌شده: {{ formatPrice(lastClosed.counted_cash) }}
             </p>
             <p :class="differenceClass(lastClosed.difference)">
-                <template v-if="lastClosed.difference === 0">بدون مغایرت ✔</template>
+                <template v-if="lastClosed.difference === 0">بدون مغایرت <IconCheck class="emo-icon" aria-hidden="true" /></template>
                 <template v-else-if="lastClosed.difference > 0">مازاد: {{ formatPrice(lastClosed.difference) }}</template>
                 <template v-else>کسری: {{ formatPrice(Math.abs(lastClosed.difference)) }}</template>
             </p>
@@ -92,10 +92,12 @@
 </template>
 
 <script>
+import { Check as IconCheck, Receipt as IconReceipt } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 export default {
+    components: { IconCheck, IconReceipt },
     name: 'ReceptionShift',
     setup() {
         const shift = ref(null);

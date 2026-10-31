@@ -1,7 +1,7 @@
 <template>
     <div class="po-page">
         <div class="page-header">
-            <h2>🚚 خرید و تأمین‌کنندگان</h2>
+            <h2><IconTruck class="emo-icon" aria-hidden="true" /> خرید و تأمین‌کنندگان</h2>
             <div class="tabs">
                 <button :class="{ active: tab === 'orders' }" @click="tab = 'orders'">سفارش‌های خرید</button>
                 <button :class="{ active: tab === 'suppliers' }" @click="tab = 'suppliers'">تأمین‌کنندگان</button>
@@ -17,7 +17,7 @@
                     <option value="">همه وضعیت‌ها</option>
                     <option v-for="(label, key) in statusLabels" :key="key" :value="key">{{ label }}</option>
                 </select>
-                <button class="btn-primary" @click="openCreate">➕ سفارش خرید جدید</button>
+                <button class="btn-primary" @click="openCreate"><IconPlus class="emo-icon" aria-hidden="true" /> سفارش خرید جدید</button>
             </div>
 
             <div class="table-container">
@@ -224,6 +224,7 @@
 </template>
 
 <script>
+import { Plus as IconPlus, Truck as IconTruck } from 'lucide-vue-next';
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 
@@ -231,6 +232,7 @@ const emptyCreate = () => ({ supplier_id: '', branch_id: '', notes: '', items: [
 const emptySupplier = () => ({ id: null, name: '', phone: '', email: '', address: '', notes: '' });
 
 export default {
+    components: { IconPlus, IconTruck },
     name: 'PurchaseOrders',
     setup() {
         const tab = ref('orders');

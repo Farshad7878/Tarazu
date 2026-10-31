@@ -1,7 +1,7 @@
 <template>
     <div class="gift-reception-page">
         <div class="page-header">
-            <h2>🎁 کارت هدیه</h2>
+            <h2><IconGift class="emo-icon" aria-hidden="true" /> کارت هدیه</h2>
             <p class="muted">صدور کارت هدیه برای مشتری و استعلام مانده‌ی کارت.</p>
         </div>
 
@@ -40,12 +40,14 @@
 </template>
 
 <script>
+import { Gift as IconGift } from 'lucide-vue-next';
 import { ref } from 'vue';
 import axios from 'axios';
 
 const emptyForm = () => ({ amount: 100000, payment_method: 'cash', customer_membership_number: '' });
 
 export default {
+    components: { IconGift },
     name: 'ReceptionGiftCards',
     setup() {
         const form = ref(emptyForm());

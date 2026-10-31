@@ -3,13 +3,13 @@
         <!-- هدر صفحه -->
         <div class="page-header">
             <div class="header-content">
-                <h1>🛒 ثبت سفارش جدید</h1>
+                <h1><IconShoppingCart class="emo-icon" aria-hidden="true" /> ثبت سفارش جدید</h1>
                 <p>سیستم ثبت خرید برای مشتریان</p>
             </div>
             <div class="header-actions">
                 <label class="auto-print-toggle" title="بعد از ثبت موفق سفارش، رسید به‌طور خودکار چاپ شود">
                     <input type="checkbox" v-model="autoPrintReceipt" />
-                    🖨️ چاپ خودکار رسید
+                    <IconPrinter class="emo-icon" aria-hidden="true" /> چاپ خودکار رسید
                 </label>
                 <button
                     type="button"
@@ -18,7 +18,7 @@
                     :disabled="orderLoading || holding || cartItems.length === 0 || !isOnline"
                     title="سبد فعلی را برای بعد نگه می‌دارد"
                 >
-                    ⏸ معلق کردن سبد
+                    <IconPause class="emo-icon" aria-hidden="true" /> معلق کردن سبد
                 </button>
                 <button
                     type="button"
@@ -26,14 +26,14 @@
                     class="btn-outline"
                     :disabled="orderLoading || !isOnline"
                 >
-                    📋 سبدهای معلق<span v-if="heldCount"> ({{ heldCount }})</span>
+                    <IconClipboardList class="emo-icon" aria-hidden="true" /> سبدهای معلق<span v-if="heldCount"> ({{ heldCount }})</span>
                 </button>
                 <button 
                     @click="resetOrder"
                     class="btn-secondary"
                     :disabled="orderLoading"
                 >
-                    🔄 شروع جدید
+                    <IconRefreshCw class="emo-icon" aria-hidden="true" /> شروع جدید
                 </button>
             </div>
         </div>
@@ -41,8 +41,8 @@
         <!-- وضعیت آفلاین و صف سفارش‌های ذخیره‌شده -->
         <div v-if="!isOnline || offlineQueue.length" class="offline-banner" :class="{ 'offline-banner-off': !isOnline }">
             <div class="offline-line">
-                <span v-if="!isOnline">📴 اینترنت قطع است. سفارش‌ها روی این دستگاه ذخیره و هنگام اتصال ارسال می‌شوند.</span>
-                <span v-else>🕓 {{ offlineQueue.length }} سفارش در صف ارسال است.</span>
+                <span v-if="!isOnline"><IconWifiOff class="emo-icon" aria-hidden="true" /> اینترنت قطع است. سفارش‌ها روی این دستگاه ذخیره و هنگام اتصال ارسال می‌شوند.</span>
+                <span v-else><IconClock class="emo-icon" aria-hidden="true" /> {{ offlineQueue.length }} سفارش در صف ارسال است.</span>
                 <span v-if="usingCachedData" class="offline-note">(منو و موجودی از آخرین بارگذاری)</span>
                 <button
                     v-if="isOnline && offlineQueue.length && !flushing"
@@ -62,7 +62,7 @@
                         ذخیره: {{ new Date(entry.queued_at).toLocaleString('fa-IR') }}
                     </span>
                     <span v-if="!entry.failed && entry.stock_warnings && entry.stock_warnings.length" class="queue-error" style="color:#b45309">
-                        ⚠️ احتمال کمبود موجودی: {{ entry.stock_warnings.join('، ') }}
+                        <IconTriangleAlert class="emo-icon" aria-hidden="true" /> احتمال کمبود موجودی: {{ entry.stock_warnings.join('، ') }}
                     </span>
                     <span v-if="entry.failed" class="queue-error">رد شد: {{ entry.last_error }}</span>
                     <span v-if="entry.failed" class="queue-actions">
@@ -80,7 +80,7 @@
                 :key="message.id"
                 :class="['message', `message-${message.type}`]"
             >
-                <span class="message-icon">{{ message.icon }}</span>
+                <span class="message-icon"><component :is="emojiIcon(message.icon)" v-if="emojiIcon(message.icon)" class="emo-icon" /><template v-else>{{ message.icon }}</template></span>
                 <div class="message-content">
                     <div class="message-title">{{ message.title }}</div>
                     <div class="message-text">{{ message.text }}</div>
@@ -94,7 +94,7 @@
             <div class="sidebar">
                 <!-- بخش جستجوی مشتری -->
                 <div class="customer-section">
-                    <h3>👤 اطلاعات مشتری</h3>
+                    <h3><IconUser class="emo-icon" aria-hidden="true" /> اطلاعات مشتری</h3>
                     
                     <div class="customer-search">
                         <div class="search-input-group">
@@ -111,7 +111,7 @@
                                 class="btn-search"
                                 :disabled="orderLoading || !membershipSearch.trim()"
                             >
-                                🔍 جستجو
+                                <IconSearch class="emo-icon" aria-hidden="true" /> جستجو
                             </button>
                         </div>
                         
@@ -121,14 +121,14 @@
                                 class="btn-outline"
                                 :disabled="orderLoading"
                             >
-                                ➕ مشتری جدید
+                                <IconPlus class="emo-icon" aria-hidden="true" /> مشتری جدید
                             </button>
                             <button 
                                 v-if="customer"
                                 @click="viewCustomerHistory"
                                 class="btn-outline"
                             >
-                                📊 تاریخچه
+                                <IconChartColumn class="emo-icon" aria-hidden="true" /> تاریخچه
                             </button>
                         </div>
                     </div>
@@ -144,25 +144,25 @@
                                 <p>شماره: {{ customer.membership_number }}</p>
                             </div>
                             <button @click="clearCustomer" class="btn-remove" title="حذف مشتری">
-                                ✕
+                                <IconX class="emo-icon" aria-hidden="true" />
                             </button>
                         </div>
 
                         <div class="customer-details">
                             <div class="detail-item">
-                                <span class="label">📞 تلفن:</span>
+                                <span class="label"><IconPhone class="emo-icon" aria-hidden="true" /> تلفن:</span>
                                 <span class="value">{{ customer.phone }}</span>
                             </div>
                             <div v-if="customer.date_of_birth" class="detail-item">
-                                <span class="label">🎂 تولد:</span>
+                                <span class="label"><IconCake class="emo-icon" aria-hidden="true" /> تولد:</span>
                                 <span class="value">{{ formatDate(customer.date_of_birth) }}</span>
                             </div>
                             <div class="detail-item">
-                                <span class="label">💰 مجموع خرید:</span>
+                                <span class="label"><IconCoins class="emo-icon" aria-hidden="true" /> مجموع خرید:</span>
                                 <span class="value price">{{ formatPrice(customer.total_purchases) }}</span>
                             </div>
                             <div class="detail-item">
-                                <span class="label">📈 خرید این ماه:</span>
+                                <span class="label"><IconTrendingUp class="emo-icon" aria-hidden="true" /> خرید این ماه:</span>
                                 <span class="value price">{{ formatPrice(customer.monthly_purchases || 0) }}</span>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                         <!-- تخفیف‌های فعال -->
                         <div v-if="customer.loyalty" class="loyalty-box">
                             <div class="loyalty-line">
-                                ⭐ امتیاز: <strong>{{ customer.loyalty.points_balance }}</strong>
+                                <IconStar class="emo-icon" aria-hidden="true" /> امتیاز: <strong>{{ customer.loyalty.points_balance }}</strong>
                                 <span class="loyalty-tier">سطح {{ customer.loyalty.tier }}</span>
                             </div>
                             <div v-if="customer.loyalty.points_balance >= customer.loyalty.min_redeem_points" class="loyalty-redeem">
@@ -191,7 +191,7 @@
 
                         <div v-if="customer.active_discounts && customer.active_discounts.length > 0" 
                              class="discounts-section">
-                            <h5>🎫 تخفیف‌های فعال</h5>
+                            <h5><IconTicket class="emo-icon" aria-hidden="true" /> تخفیف‌های فعال</h5>
                             <div class="discounts-list">
                                 <div 
                                     v-for="discount in customer.active_discounts" 
@@ -220,7 +220,7 @@
 
                 <!-- خلاصه سفارش -->
                 <div v-if="customer && cartItems.length > 0" class="order-summary-card">
-                    <h3>🧾 خلاصه سفارش</h3>
+                    <h3><IconReceipt class="emo-icon" aria-hidden="true" /> خلاصه سفارش</h3>
                     
                     <div class="summary-items">
                         <div class="summary-item">
@@ -257,7 +257,7 @@
             </div>
                         
                         <div v-if="realTimeSummary.gift_amount > 0" class="summary-item discount">
-                            <span class="discount-name">🎁 کارت هدیه</span>
+                            <span class="discount-name"><IconGift class="emo-icon" aria-hidden="true" /> کارت هدیه</span>
                             <span class="discount-amount">-{{ formatPrice(realTimeSummary.gift_amount) }}</span>
                         </div>
                         <div class="summary-item total">
@@ -272,13 +272,13 @@
 
                     <!-- کارت هدیه -->
                     <div v-if="customer" class="gift-card-box">
-                        <label>🎁 کارت هدیه:</label>
+                        <label><IconGift class="emo-icon" aria-hidden="true" /> کارت هدیه:</label>
                         <div v-if="appliedGiftCode" class="gift-applied">
                             <span>
                                 کد <strong>{{ appliedGiftCode }}</strong>
                                 <template v-if="giftCardInfo?.applied"> — {{ formatPrice(giftCardInfo.applied) }} اعمال شد</template>
                             </span>
-                            <button type="button" class="btn-remove" title="حذف کارت هدیه" @click="removeGiftCard">✕</button>
+                            <button type="button" class="btn-remove" title="حذف کارت هدیه" @click="removeGiftCard"><IconX class="emo-icon" aria-hidden="true" /></button>
                         </div>
                         <div v-else class="gift-input-row">
                             <input
@@ -338,7 +338,7 @@
                 :key="disc.id"
                 class="discount-message"
             >
-                🎫 {{ disc.message }}
+                <IconTicket class="emo-icon" aria-hidden="true" /> {{ disc.message }}
             </div>
         </div>
                     </div>
@@ -350,7 +350,7 @@
                             class="btn-clear"
                             :disabled="orderLoading"
                         >
-                            🗑️ پاک کردن سبد
+                            <IconTrash2 class="emo-icon" aria-hidden="true" /> پاک کردن سبد
                         </button>
                         <button 
                             @click="submitOrder"
@@ -363,7 +363,7 @@
                                 در حال ثبت...
                             </span>
                             <span v-else>
-                                {{ isOnline ? '✅ ثبت نهایی سفارش' : '📴 ذخیره‌ی آفلاین سفارش' }}
+                                <component :is="emojiIcon(isOnline ? '✅' : '📴')" class="emo-icon" /> {{ isOnline ? 'ثبت نهایی سفارش' : 'ذخیره‌ی آفلاین سفارش' }}
                             </span>
                         </button>
                     </div>
@@ -375,7 +375,7 @@
                 <!-- دسته‌بندی محصولات -->
                 <div class="categories-section">
                     <div class="categories-header">
-                        <h3>🛍️ انتخاب محصولات</h3>
+                        <h3><IconShoppingBag class="emo-icon" aria-hidden="true" /> انتخاب محصولات</h3>
                         <div class="category-filters">
                             <button 
                                 v-for="category in categories"
@@ -383,7 +383,7 @@
                                 @click="setActiveCategory(category.value)"
                                 :class="['category-btn', { active: activeCategory === category.value }]"
                             >
-                                {{ category.icon }} {{ category.label }}
+                                <component :is="emojiIcon(category.icon)" v-if="emojiIcon(category.icon)" class="emo-icon" /><template v-else>{{ category.icon }}</template> {{ category.label }}
                             </button>
                         </div>
                     </div>
@@ -397,7 +397,7 @@
                                 placeholder="جستجوی محصولات..."
                                 class="search-input"
                             >
-                            <span class="search-icon">🔍</span>
+                            <span class="search-icon"><IconSearch class="emo-icon" aria-hidden="true" /></span>
                         </div>
                         <div class="barcode-box">
                             <input
@@ -410,7 +410,7 @@
                                 @keyup.enter="scanBarcode"
                             >
                             <button type="button" class="btn-outline" :disabled="!barcodeInput.trim() || orderLoading" @click="scanBarcode">
-                                ➕ افزودن
+                                <IconPlus class="emo-icon" aria-hidden="true" /> افزودن
                             </button>
                         </div>
                         <div class="sort-options">
@@ -444,10 +444,10 @@
                                 @error="failedImages[product.id] = true"
                             >
                             <div v-else class="image-placeholder">
-                                {{ product.category_icon || '📦' }}
+                                <component :is="emojiIcon('📦')" v-if="!product.category_icon" class="emo-icon" /><template v-else>{{ product.category_icon }}</template>
                             </div>
                             <div v-if="product.stock_quantity === 0" class="out-of-stock-overlay">
-                                ❌ ناموجود
+                                <IconX class="emo-icon" aria-hidden="true" /> ناموجود
                             </div>
                         </div>
 
@@ -458,7 +458,7 @@
                             </p>
                             <div class="product-meta">
                                 <span class="product-type">{{ product.category_name }}</span>
-                                <span v-if="product.variant_label" class="variant-badge">🧩 {{ product.variant_label }}</span>
+                                <span v-if="product.variant_label" class="variant-badge"><IconPuzzle class="emo-icon" aria-hidden="true" /> {{ product.variant_label }}</span>
                                 <span class="product-stock" v-if="product.stock_quantity > 0">
                                     موجودی: {{ product.stock_quantity }}
                                 </span>
@@ -496,7 +496,7 @@
                                 class="btn-add-to-cart"
                                 :disabled="product.stock_quantity === 0"
                             >
-                                ➕ افزودن
+                                <IconPlus class="emo-icon" aria-hidden="true" /> افزودن
                             </button>
                         </div>
                     </div>
@@ -509,7 +509,7 @@
                 </div>
 
                 <div v-if="!productsLoading && filteredProducts.length === 0" class="no-products">
-                    <div class="no-products-icon">🍃</div>
+                    <div class="no-products-icon"><IconLeaf class="emo-icon" aria-hidden="true" /></div>
                     <h4>محصولی یافت نشد</h4>
                     <p>هیچ محصولی با فیلترهای انتخابی شما مطابقت ندارد.</p>
                 </div>
@@ -553,6 +553,8 @@
 
 
 <script>
+import { emojiIcon } from '../../utils/emojiIcons';
+import { Cake as IconCake, ChartColumn as IconChartColumn, ClipboardList as IconClipboardList, Clock as IconClock, Coins as IconCoins, Gift as IconGift, Leaf as IconLeaf, Pause as IconPause, Phone as IconPhone, Plus as IconPlus, Printer as IconPrinter, Puzzle as IconPuzzle, Receipt as IconReceipt, RefreshCw as IconRefreshCw, Search as IconSearch, ShoppingBag as IconShoppingBag, ShoppingCart as IconShoppingCart, Star as IconStar, Ticket as IconTicket, Trash2 as IconTrash2, TrendingUp as IconTrendingUp, TriangleAlert as IconTriangleAlert, User as IconUser, WifiOff as IconWifiOff, X as IconX } from 'lucide-vue-next';
 import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
@@ -580,8 +582,9 @@ import {
 const MAX_TRANSIENT_ATTEMPTS = 5;
 
 export default {
+    methods: { emojiIcon },
     name: 'NewOrder',
-    components: {
+    components: { IconCake, IconChartColumn, IconClipboardList, IconClock, IconCoins, IconGift, IconLeaf, IconPause, IconPhone, IconPlus, IconPrinter, IconPuzzle, IconReceipt, IconRefreshCw, IconSearch, IconShoppingBag, IconShoppingCart, IconStar, IconTicket, IconTrash2, IconTrendingUp, IconTriangleAlert, IconUser, IconWifiOff, IconX, 
         CustomerModal,
         CustomerHistoryModal,
         OrderConfirmationModal,

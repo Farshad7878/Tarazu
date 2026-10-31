@@ -1,8 +1,8 @@
 <template>
     <div class="users-page transfers-page">
         <div class="page-header">
-            <h2>🔁 انتقال موجودی بین شعبه‌ها</h2>
-            <button @click="openCreate" class="btn-primary" :disabled="activeBranches.length < 2">➕ انتقال جدید</button>
+            <h2><IconRepeat class="emo-icon" aria-hidden="true" /> انتقال موجودی بین شعبه‌ها</h2>
+            <button @click="openCreate" class="btn-primary" :disabled="activeBranches.length < 2"><IconPlus class="emo-icon" aria-hidden="true" /> انتقال جدید</button>
         </div>
 
         <p class="page-hint">
@@ -110,7 +110,7 @@
                             >
                             <button type="button" @click="removeRow(index)" class="btn-delete" :disabled="createForm.items.length === 1">×</button>
                         </div>
-                        <button type="button" @click="addRow" class="btn-cancel" :disabled="!createForm.from_branch_id || sourceProducts.length === 0">➕ افزودن کالا</button>
+                        <button type="button" @click="addRow" class="btn-cancel" :disabled="!createForm.from_branch_id || sourceProducts.length === 0"><IconPlus class="emo-icon" aria-hidden="true" /> افزودن کالا</button>
                     </div>
 
                     <div class="form-group">
@@ -169,6 +169,7 @@
 </template>
 
 <script>
+import { Plus as IconPlus, Repeat as IconRepeat } from 'lucide-vue-next';
 import { ref, computed, onMounted } from 'vue';
 import axios from 'axios';
 import { useNotificationStore } from '../../stores/notifications';
@@ -181,6 +182,7 @@ const emptyCreate = () => ({
 });
 
 export default {
+    components: { IconPlus, IconRepeat },
     name: 'AdminStockTransfers',
     setup() {
         const notificationStore = useNotificationStore();

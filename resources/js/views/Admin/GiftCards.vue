@@ -1,7 +1,7 @@
 <template>
     <div class="gift-page">
         <div class="page-header">
-            <h2>🎁 گیفت کارت‌ها</h2>
+            <h2><IconGift class="emo-icon" aria-hidden="true" /> گیفت کارت‌ها</h2>
         </div>
 
         <div v-if="message" :class="['flash', messageType]">{{ message }}</div>
@@ -75,12 +75,14 @@
 </template>
 
 <script>
+import { Gift as IconGift } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 const emptyForm = () => ({ amount: 100000, payment_method: 'cash', customer_membership_number: '' });
 
 export default {
+    components: { IconGift },
     name: 'AdminGiftCards',
     setup() {
         const cards = ref([]);

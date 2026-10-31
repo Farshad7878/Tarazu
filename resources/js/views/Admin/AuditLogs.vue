@@ -1,7 +1,7 @@
 <template>
     <div class="audit-page">
         <div class="page-header">
-            <h2>🕵️ گزارش فعالیت‌ها (Audit Log)</h2>
+            <h2><IconUserSearch class="emo-icon" aria-hidden="true" /> گزارش فعالیت‌ها (Audit Log)</h2>
             <span class="muted">هر ثبت فقط برای خواندن است و ویرایش یا حذف نمی‌شود.</span>
         </div>
 
@@ -64,12 +64,14 @@
 </template>
 
 <script>
+import { UserSearch as IconUserSearch } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 const emptyFilters = () => ({ user: '', action: '', subject_type: '', search: '', from: '', to: '' });
 
 export default {
+    components: { IconUserSearch },
     name: 'AuditLogs',
     setup() {
         const logs = ref([]);

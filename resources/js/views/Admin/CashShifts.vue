@@ -1,7 +1,7 @@
 <template>
     <div class="cash-shifts-page">
         <div class="page-header">
-            <h2>🧾 صندوق‌ها و مغایرت نقد</h2>
+            <h2><IconReceipt class="emo-icon" aria-hidden="true" /> صندوق‌ها و مغایرت نقد</h2>
             <label class="filter-check">
                 <input type="checkbox" v-model="onlyMismatched" @change="fetchShifts(1)">
                 فقط صندوق‌های دارای مغایرت
@@ -51,10 +51,12 @@
 </template>
 
 <script>
+import { Receipt as IconReceipt } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 export default {
+    components: { IconReceipt },
     name: 'AdminCashShifts',
     setup() {
         const shifts = ref([]);

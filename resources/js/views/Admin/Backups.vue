@@ -2,10 +2,10 @@
     <div class="backup-page">
         <div class="page-header">
             <div>
-                <h2>💾 پشتیبان‌گیری و بازیابی</h2>
+                <h2><IconSave class="emo-icon" aria-hidden="true" /> پشتیبان‌گیری و بازیابی</h2>
                 <p class="muted">پشتیبان خودکار هر شب ساعت ۰۲:۳۰ ساخته می‌شود. نگه‌داری: {{ keep }} نسخه‌ی آخر.</p>
             </div>
-            <button class="btn-primary" :disabled="working" @click="createBackup">➕ پشتیبان جدید</button>
+            <button class="btn-primary" :disabled="working" @click="createBackup"><IconPlus class="emo-icon" aria-hidden="true" /> پشتیبان جدید</button>
         </div>
 
         <div v-if="message" :class="['flash', messageType]">{{ message }}</div>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="notice">
-            ⚠️ بازیابی، کل اطلاعات فعلی را با محتوای پشتیبان جایگزین می‌کند. پیش از بازیابی، خودکار یک پشتیبان از وضعیت فعلی گرفته می‌شود.
+            <IconTriangleAlert class="emo-icon" aria-hidden="true" /> بازیابی، کل اطلاعات فعلی را با محتوای پشتیبان جایگزین می‌کند. پیش از بازیابی، خودکار یک پشتیبان از وضعیت فعلی گرفته می‌شود.
             گزارش فعالیت‌ها (Audit Log) هم با پشتیبان جایگزین می‌شود، بنابراین رویدادهای بعد از زمان پشتیبان از آن حذف می‌شوند؛ ثبت «بازیابی پشتیبان» پس از بازیابی نوشته می‌شود.
         </div>
 
@@ -57,10 +57,12 @@
 </template>
 
 <script>
+import { Plus as IconPlus, Save as IconSave, TriangleAlert as IconTriangleAlert } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
 export default {
+    components: { IconPlus, IconSave, IconTriangleAlert },
     name: 'Backups',
     setup() {
         const backups = ref([]);

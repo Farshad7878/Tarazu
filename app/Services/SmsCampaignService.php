@@ -87,7 +87,10 @@ class SmsCampaignService
     /**
      * ارسال گیرنده‌های در انتظار تا سقف روزانه. خروجی: تعداد هر وضعیت در این اجرا.
      *
-     * @return array{sent: int, failed: int, skipped: int, quota_left: int}
+     * فقط پیامکی که سرویس‌دهنده‌ی واقعی پذیرفته «sent» و از سهمیه کم می‌شود.
+     * در حالت log (شبیه‌سازی) گیرنده «simulated» می‌شود و نه سهمیه را مصرف می‌کند نه در آمار ارسال‌شده می‌آید.
+     *
+     * @return array{sent: int, simulated: int, failed: int, skipped: int, quota_left: int}
      */
     public function sendPending(): array
     {
@@ -96,7 +99,7 @@ class SmsCampaignService
             ->count();
 
         $quotaLeft = max(0, (int) config('sms.campaign_daily_limit') - $sentToday);
-        $result = ['sent' => 0, 'failed' => 0, 'skipped' => 0, 'quota_left' => $quotaLeft];
+        $result = ['sent' => 0, 'simulated' => 0, 'failed' => 0, 'skipped' => 0, 'quota_left' => $quotaLeft];
 
         if ($quotaLeft > 0) {
             $batch = SmsCampaignRecipient::with(['campaign', 'customer'])
@@ -117,11 +120,14 @@ class SmsCampaignService
                     continue;
                 }
 
-                $accepted = $this->sms->send($recipient->phone, $this->render($recipient->campaign->message, $customer));
+                $outcome = $this->sms->attempt($recipient->phone, $this->render($recipient->campaign->message, $customer));
 
-                if ($accepted) {
+                if ($outcome === SmsOutcome::ACCEPTED) {
                     $this->finish($recipient, 'sent');
                     $result['sent']++;
+                } elseif ($outcome === SmsOutcome::SIMULATED) {
+                    $this->finish($recipient, 'simulated', 'درایور پیامک log است؛ پیامکی ارسال نشد');
+                    $result['simulated']++;
                 } else {
                     $this->finish($recipient, 'failed', 'ارسال پیامک ناموفق بود');
                     $result['failed']++;
@@ -178,7 +184,13 @@ class SmsCampaignService
             'sent_at' => $status === 'sent' ? now() : null,
         ]);
 
-        $column = ['sent' => 'sent_count', 'failed' => 'failed_count', 'skipped' => 'skipped_count'][$status];
+        $column = [
+            'sent' => 'sent_count',
+            'simulated' => 'simulated_count',
+            'failed' => 'failed_count',
+            'skipped' => 'skipped_count',
+        ][$status];
+
         SmsCampaign::whereKey($recipient->sms_campaign_id)->increment($column);
     }
 }

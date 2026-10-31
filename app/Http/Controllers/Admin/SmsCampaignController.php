@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\SmsCampaign;
 use App\Services\SmsCampaignService;
+use App\Services\SmsService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -28,6 +29,7 @@ class SmsCampaignController extends Controller
                 'sent_count' => $c->sent_count,
                 'failed_count' => $c->failed_count,
                 'skipped_count' => $c->skipped_count,
+                'simulated_count' => $c->simulated_count,
                 'created_by' => $c->creator?->name,
                 'created_at' => $c->created_at->format('Y-m-d H:i'),
                 'completed_at' => $c->completed_at?->format('Y-m-d H:i'),
@@ -38,6 +40,9 @@ class SmsCampaignController extends Controller
                 'total' => $campaigns->total(),
             ],
             'daily_limit' => (int) config('sms.campaign_daily_limit'),
+            // اگر false باشد هیچ پیامکی واقعاً ارسال نمی‌شود و کمپین فقط شبیه‌سازی می‌شود
+            'sms_live' => app(SmsService::class)->isLive(),
+            'sms_driver' => config('sms.driver'),
         ]);
     }
 

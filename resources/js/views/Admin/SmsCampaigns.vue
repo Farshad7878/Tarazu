@@ -5,6 +5,12 @@
             <span class="limit-note">سقف ارسال روزانه: {{ dailyLimit }} پیامک</span>
         </div>
 
+        <div v-if="smsLive === false" class="sim-warning">
+            ⚠️ درایور پیامک روی <strong>{{ smsDriver }}</strong> است و هیچ پیامکی به مشتری ارسال نمی‌شود.
+            کمپین‌ها فقط شبیه‌سازی می‌شوند؛ آمار «شبیه‌سازی‌شده» است و «ارسال‌شده» نیست.
+            برای ارسال واقعی، SMS_DRIVER=kavenegar و کلید API را تنظیم کنید.
+        </div>
+
         <div class="card">
             <h3>کمپین جدید</h3>
             <p class="hint">
@@ -65,6 +71,7 @@
                         <th>ارسال‌شده</th>
                         <th>ناموفق</th>
                         <th>رده‌شده</th>
+                        <th>شبیه‌سازی</th>
                         <th>ثبت</th>
                         <th>عملیات</th>
                     </tr>
@@ -81,6 +88,7 @@
                         <td>{{ c.sent_count }}</td>
                         <td>{{ c.failed_count }}</td>
                         <td>{{ c.skipped_count }}</td>
+                        <td>{{ c.simulated_count }}</td>
                         <td>{{ c.created_at }}<div class="muted">{{ c.created_by || '' }}</div></td>
                         <td>
                             <button v-if="c.status === 'active'" class="btn-danger small" :disabled="busy" @click="cancelCampaign(c)">لغو</button>
@@ -112,6 +120,8 @@ export default {
     setup() {
         const campaigns = ref([]);
         const dailyLimit = ref(0);
+        const smsLive = ref(null);
+        const smsDriver = ref('');
         const form = ref(emptyForm());
         const preview = ref(null);
         const busy = ref(false);
@@ -140,6 +150,8 @@ export default {
                 const response = await axios.get('/api/admin/sms-campaigns');
                 campaigns.value = response.data.campaigns;
                 dailyLimit.value = response.data.daily_limit;
+                smsLive.value = response.data.sms_live;
+                smsDriver.value = response.data.sms_driver;
             } catch (error) {
                 notify(errorText(error), 'error');
             }
@@ -194,7 +206,7 @@ export default {
         onMounted(fetchCampaigns);
 
         return {
-            campaigns, dailyLimit, form, preview, busy, message, messageType,
+            campaigns, dailyLimit, smsLive, smsDriver, form, preview, busy, message, messageType,
             previewAudience, storeCampaign, cancelCampaign,
         };
     },
@@ -206,6 +218,7 @@ export default {
 .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
 .page-header h2 { margin: 0; }
 .limit-note { color: #718096; font-size: 0.9rem; }
+.sim-warning { background: #fffaf0; border: 1px solid #f6ad55; color: #7b341e; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; line-height: 1.8; }
 .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; margin-bottom: 16px; }
 .card h3 { margin: 0 0 8px; }
 .hint { color: #718096; font-size: 0.88rem; margin-bottom: 12px; }

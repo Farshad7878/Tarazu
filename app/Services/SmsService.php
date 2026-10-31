@@ -12,31 +12,52 @@ use Throwable;
 class SmsService
 {
     /**
-     * @return bool آیا پیامک با موفقیت پذیرفته شد؟ خطا هرگز به کاربر منتقل نمی‌شود.
+     * آیا پیامک واقعاً به سرویس‌دهنده ارسال می‌شود؟ (درایور log یعنی خیر)
+     */
+    public function isLive(): bool
+    {
+        return config('sms.driver') !== 'log';
+    }
+
+    /**
+     * برای لیسنرها (خوش‌آمد، تولد، تشکر). درایور log هم true برمی‌گرداند چون عمداً فقط لاگ می‌کند.
+     * کسی که دقیق بداند پیامک واقعاً رفته یا نه، باید attempt() را صدا بزند.
+     *
+     * @return bool خطا هرگز به کاربر منتقل نمی‌شود.
      */
     public function send(?string $phone, string $message): bool
     {
+        return $this->attempt($phone, $message) !== SmsOutcome::FAILED;
+    }
+
+    /**
+     * تلاش ارسال با نتیجه‌ی صریح. کمپین‌ها باید از این استفاده کنند تا شبیه‌سازی را «ارسال‌شده» حساب نکنند.
+     */
+    public function attempt(?string $phone, string $message): SmsOutcome
+    {
         if (blank($phone)) {
-            return false;
+            return SmsOutcome::FAILED;
         }
 
         try {
             return match (config('sms.driver')) {
-                'kavenegar' => $this->sendViaKavenegar($phone, $message),
+                'kavenegar' => $this->sendViaKavenegar($phone, $message)
+                    ? SmsOutcome::ACCEPTED
+                    : SmsOutcome::FAILED,
                 default => $this->logOnly($phone, $message),
             };
         } catch (Throwable $e) {
             Log::error('ارسال پیامک ناموفق بود: '.$e->getMessage(), ['phone' => $phone]);
 
-            return false;
+            return SmsOutcome::FAILED;
         }
     }
 
-    private function logOnly(string $phone, string $message): bool
+    private function logOnly(string $phone, string $message): SmsOutcome
     {
         Log::info("[SMS:log] به {$phone}: {$message}");
 
-        return true;
+        return SmsOutcome::SIMULATED;
     }
 
     private function sendViaKavenegar(string $phone, string $message): bool

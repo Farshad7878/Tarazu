@@ -90,12 +90,12 @@ class Product extends Model
 
     const STATUS_APPROVED = 'approved';
 
-    const STATUS_REJECTED = 'rejected';
-
+    /**
+     * فقط همین دو وضعیت در ستون products.status (enum) و اعتبارسنجی API مجاز است
+     */
     const STATUSES = [
         self::STATUS_PENDING => 'در انتظار تایید',
         self::STATUS_APPROVED => 'تایید شده',
-        self::STATUS_REJECTED => 'رد شده',
     ];
 
     /**
@@ -255,7 +255,6 @@ class Product extends Model
         return $this->belongsTo(Product::class, 'parent_product_id');
     }
 
-    /** @return array<int, string> */
     /**
      * موجودی این محصول به تفکیک شعبه
      */
@@ -319,17 +318,6 @@ class Product extends Model
     public function approve()
     {
         $this->status = self::STATUS_APPROVED;
-
-        return $this->save();
-    }
-
-    /**
-     * رد محصول
-     */
-    public function reject($reason = null)
-    {
-        $this->status = self::STATUS_REJECTED;
-        $this->notes = $reason;
 
         return $this->save();
     }

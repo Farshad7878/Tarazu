@@ -13,10 +13,12 @@ class SmsCampaignRecipient extends Model
         'status',
         'error',
         'sent_at',
+        'claimed_at',
     ];
 
     protected $casts = [
         'sent_at' => 'datetime',
+        'claimed_at' => 'datetime',
     ];
 
     public function campaign()

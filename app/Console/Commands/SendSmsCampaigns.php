@@ -15,6 +15,12 @@ class SendSmsCampaigns extends Command
     {
         $result = $service->sendPending();
 
+        if ($result['busy']) {
+            $this->warn('اجرای دیگری از ارسال کمپین هم‌اکنون در حال انجام است؛ این اجرا کاری نکرد.');
+
+            return self::SUCCESS;
+        }
+
         $this->info("ارسال شد: {$result['sent']} | ناموفق: {$result['failed']} | رد شد: {$result['skipped']} | سهمیه‌ی باقی‌مانده امروز: {$result['quota_left']}");
 
         return self::SUCCESS;

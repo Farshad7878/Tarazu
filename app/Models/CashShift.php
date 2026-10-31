@@ -13,6 +13,7 @@ class CashShift extends Model
 
     protected $fillable = [
         'user_id',
+        'open_user_id',
         'opened_at',
         'closed_at',
         'opening_cash',

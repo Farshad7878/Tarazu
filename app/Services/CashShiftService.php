@@ -7,6 +7,8 @@ use App\Models\GiftCardTransaction;
 use App\Models\Order;
 use App\Models\OrderReturn;
 use App\Models\User;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 /**
@@ -30,20 +32,38 @@ class CashShiftService
 
     public function open(User $user, float $openingCash, ?string $notes = null): CashShift
     {
-        // قفل کاربر تا دو درخواست همزمان دو شیفت باز نسازند
-        User::whereKey($user->id)->lockForUpdate()->firstOrFail();
+        return DB::transaction(function () use ($user, $openingCash, $notes) {
+            // قفل ردیف کاربر تا دو درخواست همزمان یکدیگر را منتظر بگذارند
+            User::whereKey($user->id)->lockForUpdate()->firstOrFail();
 
-        if ($this->currentFor($user)) {
-            throw ValidationException::withMessages([
-                'opening_cash' => ['صندوق شما قبلاً باز است.'],
-            ]);
-        }
+            if ($this->currentFor($user)) {
+                throw $this->alreadyOpen();
+            }
 
-        return CashShift::create([
-            'user_id' => $user->id,
-            'opened_at' => now(),
-            'opening_cash' => $openingCash,
-            'notes' => $notes,
+            try {
+                // open_user_id ایندکس یکتا دارد: حتی اگر قفل بالا کار نکند، دومین صندوق باز ثبت نمی‌شود
+                return CashShift::create([
+                    'user_id' => $user->id,
+                    'open_user_id' => $user->id,
+                    'opened_at' => now(),
+                    'opening_cash' => $openingCash,
+                    'notes' => $notes,
+                ]);
+            } catch (QueryException $e) {
+                // SQLSTATE 23000 = نقض محدودیت یکتایی (MySQL و SQLite)
+                if ((string) $e->getCode() === '23000') {
+                    throw $this->alreadyOpen();
+                }
+
+                throw $e;
+            }
+        });
+    }
+
+    private function alreadyOpen(): ValidationException
+    {
+        return ValidationException::withMessages([
+            'opening_cash' => ['صندوق شما قبلاً باز است.'],
         ]);
     }
 
@@ -98,24 +118,28 @@ class CashShiftService
 
     public function close(CashShift $shift, float $countedCash, ?string $notes = null): CashShift
     {
-        $locked = CashShift::whereKey($shift->id)->lockForUpdate()->firstOrFail();
+        return DB::transaction(function () use ($shift, $countedCash, $notes) {
+            $locked = CashShift::whereKey($shift->id)->lockForUpdate()->firstOrFail();
 
-        if (! $locked->isOpen()) {
-            throw ValidationException::withMessages([
-                'counted_cash' => ['این صندوق قبلاً بسته شده است.'],
+            if (! $locked->isOpen()) {
+                throw ValidationException::withMessages([
+                    'counted_cash' => ['این صندوق قبلاً بسته شده است.'],
+                ]);
+            }
+
+            $expected = (float) $this->summary($locked)['expected_cash'];
+
+            // open_user_id پاک می‌شود تا کاربر بتواند صندوق جدید باز کند
+            $locked->update([
+                'closed_at' => now(),
+                'open_user_id' => null,
+                'expected_cash' => $expected,
+                'counted_cash' => $countedCash,
+                'difference' => round($countedCash - $expected, 2),
+                'notes' => $notes ?? $locked->notes,
             ]);
-        }
 
-        $expected = (float) $this->summary($locked)['expected_cash'];
-
-        $locked->update([
-            'closed_at' => now(),
-            'expected_cash' => $expected,
-            'counted_cash' => $countedCash,
-            'difference' => round($countedCash - $expected, 2),
-            'notes' => $notes ?? $locked->notes,
-        ]);
-
-        return $locked->fresh();
+            return $locked->fresh();
+        });
     }
 }
